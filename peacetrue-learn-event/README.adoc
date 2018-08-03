@@ -1,0 +1,34 @@
+= 事件模型
+xiayx <xiayouxue@hotmail.com>
+v1.0, 2018-05-20: SNAPSHOT
+:doctype: docbook
+:toc: left
+:numbered:
+:imagesdir: assets/images
+:sourcedir: src/main/java
+:resourcesdir: src/main/resources
+:testsourcedir: src/test/java
+:source-highlighter: coderay
+:coderay-linenums-mode: inline
+
+== 原理
+* 事件
+* 监听器
+* 发布者
+
+监听器与发布者相互解耦。
+
+== java
+* ``java.util.EventObject``
+* ``java.util.EventListener``
+
+针对每一种事件，定义其监听器和触发器，较为繁琐
+
+== spring
+* ``org.springframework.context.event.EventListener``
+* ``org.springframework.context.ApplicationEvent``
+* ``org.springframework.context.ApplicationEventPublisher``
+
+使用统一的**事件发布者**，通过任意注解方法实现监听。
+监听方法返回一个非``void``类型，此返回值将成为事件对象被发布出去。
+
