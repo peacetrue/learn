@@ -25,7 +25,7 @@ image::uaa/log_location.png[]
 然后查看日志信息：
 `tail -100f /private/var/folders/1s/ly4n5ft11r19j6859j20mb380000gn/T/uaa-8080/logs/uaa.log`
 
-服务停止后，8080 端口会释放，但 8081 端口不会，需要手动 kill 8081 端口，才能再此启动服务。
+服务停止后，8080 端口会释放，但 8081 端口不会，需要手动 kill 8081 端口，才能再次启动服务。
 
 == 配置 MYSQL 数据库
 
@@ -84,7 +84,7 @@ image::uaa/tomcat-uaa2.png[]
 
 == 修改 issuer 地址
 
-这是一个已知的问题 https://github.com/cloudfoundry/uaa/issues/805[#805^]。 当你在资源服务器中将 issuer 配置为 http://localhost:8080/uaa 时，通过 http://localhost:8080/uaa/.well-known/openid-configuration 得到的 JSON 数据中 issuer 的值为 http://localhost:8080/uaa/oauth/token ，如此一来两个 issuer 的值就不同了，在使用``org.springframework.security:spring-security-oauth2-jose:5.3.2.RELEASE``搭建资源服务器时，Spring 会校验这两个值必须相等。你需要将 issuer 配置为 http://localhost:8080/uaa/oauth/token ，通过 http://localhost:8080/uaa/oauth/token.well-known/openid-configuration 获取配置信息也是符合标准规范的。
+这是一个已知的问题 https://github.com/cloudfoundry/uaa/issues/805[#805^]。 如果在资源服务器中将 issuer 配置为 http://localhost:8080/uaa ，通过 http://localhost:8080/uaa/.well-known/openid-configuration 得到的 JSON 数据中 issuer 的值为 http://localhost:8080/uaa/oauth/token ，如此一来两个 issuer 的值就不同了，在使用``org.springframework.security:spring-security-oauth2-jose:5.3.2.RELEASE``搭建资源服务器时，Spring 会校验这两个值必须相等。需要将 issuer 配置为 http://localhost:8080/uaa/oauth/token ，通过 http://localhost:8080/uaa/oauth/token/.well-known/openid-configuration 获取配置信息也是符合标准规范的。
 
 ////
 == 检出源码
