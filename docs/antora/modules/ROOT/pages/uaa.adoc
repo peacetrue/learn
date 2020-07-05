@@ -17,7 +17,10 @@ UAA 是 **U**ser **A**ccount and **A**uthentication 首字母的缩写， 是 Cl
 .本地启动项目
 image::uaa/gradlew-run.png[]
 
-如果启动失败，可以通过命令 `sudo lsof | grep uaa.log` 找到日志文件age::uaa/log_location.png[]
+如果启动失败，可以通过命令 `sudo lsof | grep uaa.log` 找到日志文件：
+
+.定位日志文件
+image::uaa/log_location.png[]
 
 然后查看日志信息：
 `tail -100f /private/var/folders/1s/ly4n5ft11r19j6859j20mb380000gn/T/uaa-8080/logs/uaa.log`
