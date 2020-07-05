@@ -1,5 +1,7 @@
-= antora 模板项目
+= 学习
 xiayx <xiayouxue@hotmail.com>
 v1.0, 2019-10-16: SNAPSHOT
 
-查看 http://peacetrue.github.io/public/peacetrue-template-antora/index.html[详情^]
+记录一些学到的知识，零碎的不成体系的先保存在这里，成体系后再单独建资源库。
+
+详情参考 https://peacetrue.cn/summarize/learn/index.html[安宁的博客^] 。

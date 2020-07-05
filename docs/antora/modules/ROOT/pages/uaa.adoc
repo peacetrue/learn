@@ -1,0 +1,189 @@
+= UAA 教程
+:numbered:
+
+UAA 是 **U**ser **A**ccount and **A**uthentication 首字母的缩写， 是 CloudFoundry（一个 PaaS 服务供应商）开源的用户帐号和身份认证服务，可用于搭建 OAuth2 认证授权服务器。
+
+== 参考
+
+* https://docs.cloudfoundry.org/[cloud foundry 官网^]
+* https://github.com/cloudfoundry/uaa[uaa github^]
+
+== 本地运行
+
+打开 https://github.com/cloudfoundry/uaa[uaa github^] 页面，按照文档说明，检出源码，默认分支为 develop，因为 develop 分支内容会不断更新，内容更新后可能运行效果与文档描述不符，所以这里使用最近的一个固定版本 74.21.0。
+
+服务会使用 8080 和 8081 端口，如果这些端口已被使用会导致启动失败。启动成功后，服务处于监听状态：
+
+.本地启动项目
+image::uaa/gradlew-run.png[]
+
+如果启动失败，可以通过命令 `sudo lsof | grep uaa.log` 找到日志文件age::uaa/log_location.png[]
+
+然后查看日志信息：
+`tail -100f /private/var/folders/1s/ly4n5ft11r19j6859j20mb380000gn/T/uaa-8080/logs/uaa.log`
+
+服务停止后，8080 端口会释放，但 8081 端口不会，需要手动 kill 8081 端口，才能再此启动服务。
+
+== 配置 MYSQL 数据库
+
+默认使用 hsqldb 内存数据库，你可以切换成 postgresql 或者 mysql。
+
+打开配置文件 uaa/src/main/resources/uaa.yml：
+
+启用 MYSQL profile：
+
+.启用 MYSQL 配置
+image::uaa/enable-mysql-profile.png[]
+
+修改 MYSQL 配置：
+
+.修改 MYSQL 配置
+image::uaa/modify-mysql-config.png[]
+
+在本地创建 uaa 数据库： `create database uaa`。
+
+使用 MYSQL8 会有问题，这是一个已知的 BUG https://github.com/cloudfoundry/uaa/pull/940[940^]，因为 UAA 使用的 groups 表在 MYSQL8 中成了关键字，目前官方尚未修复此 BUG。笔者本机之前使用的 8.0 版本，测试无法使用，重新通过 docker 装了一个 5.7.30 版本才可以。
+//TODO 支持 MYSQL 8
+
+== 修改 JWT 签名
+
+UAA 默认使用 HMAC256 加密算法生成签名，签名 key 值默认为：tokenKey。连接 UAA 认证服务器的资源服务器也需要用此签名 key 校验 token 值。在使用 ``org.springframework.security:spring-security-oauth2-jose:5.3.2.RELEASE``搭建资源服务器时，Spring 默认使用 client_secret 的值作为签名 key，所以两者不兼容。
+
+为了统一两者，改成 RSA 签名方式，打开 scripts/cargo/uaa.yml 文件，修改 *jwt.token.signing-key* ：
+
+.修改签名 Key
+image::uaa/modify-signing-key.png[]
+
+.修改签名 Key
+image::uaa/modify-signing-key2.png[]
+
+HMAC256 是对称加密，所有只有一个值。RSA 是非对称加密，所以需要配置 2 个值，jwt.token.signing-key 配置私钥，jwt.token.verification-key 配置公钥。
+
+== 部署到 Tomcat
+
+通过 `./gradlew run` 启动服务，不能在后台运行，也不能部署到服务器，现修改配置将其部署到 Tomcat，笔者这里使用的版本是 Tomcat 9.0.36。
+
+拷贝 scripts/cargo/log4j2.properties 文件至 uaa/src/main/resources 目录下。
+
+拷贝 scripts/cargo/uaa.yml 的内容至 uaa/src/main/resources/uaa.yml 中：
+
+image::uaa/change-uaa.png[]
+
+直接把拷贝的内容放在末尾，然后通过 *---* 分割。
+
+部署 uaa/build/libs/cloudfoundry-identity-uaa-0.0.0.war 到 Tomcat 实例：
+
+image::uaa/tomcat-uaa.png[]
+
+先在 IDEA 内运行检查下是否存在问题，然后可以直接在 tomcat 目录下通过命令启动：
+
+image::uaa/tomcat-uaa2.png[]
+
+== 修改 issuer 地址
+
+这是一个已知的问题 https://github.com/cloudfoundry/uaa/issues/805[#805^]。 当你在资源服务器中将 issuer 配置为 http://localhost:8080/uaa 时，通过 http://localhost:8080/uaa/.well-known/openid-configuration 得到的 JSON 数据中 issuer 的值为 http://localhost:8080/uaa/oauth/token ，如此一来两个 issuer 的值就不同了，在使用``org.springframework.security:spring-security-oauth2-jose:5.3.2.RELEASE``搭建资源服务器时，Spring 会校验这两个值必须相等。你需要将 issuer 配置为 http://localhost:8080/uaa/oauth/token ，通过 http://localhost:8080/uaa/oauth/token.well-known/openid-configuration 获取配置信息也是符合标准规范的。
+
+////
+== 检出源码
+
+``git clone https://github.com/cloudfoundry/uaa.git``
+
+== 启动服务
+
+按照文档说明，直接运行``./gradlew run``， 需要使用到 8080 和 8081 端口，如果这些端口已被使用会启动失败。启动成功后，服务会处于监听状态：
+
+image::uaa/gradlew-run.png[]
+
+== 访问页面
+
+访问 http://localhost:8080/uaa ，出现如下页面：
+
+image::uaa/login_page.png[]
+
+不知道账号和密码是什么，然后通过左下角的**Create account**创建一个：
+
+image::uaa/account_create_page.png[]
+
+输入邮箱地址和密码提交后，出现异常：
+
+image::uaa/account_create_error.png[]
+
+提示不明确，不知道具体出了什么错误，到后台查看日志。 通过命令``sudo lsof | grep uaa.log``找到日志位置：
+
+image::uaa/log_location.png[]
+
+查看日志信息：
+``cat /private/var/folders/1s/ly4n5ft11r19j6859j20mb380000gn/T/uaa-8080/logs/uaa.log``
+
+image::uaa/account_create_back_error.png[]
+
+发送账号验证邮件异常。
+
+== 配置邮件信息
+
+打开文件 uaa/server/src/main/resources/spring/login-ui.xml ，修改邮件相关信息：
+
+image::uaa/email_xml.png[]
+
+打开文件 build.gradle，修改邮件相关信息：
+
+image::uaa/email_gradle.png[]
+
+重启服务``./gradlew run``。 每次重启会遗留 8081 端口未关闭，需要重启前先手动关闭。
+
+再次创建账号，仍然出现发送账号验证邮件异常：
+
+image::uaa/account_create_back_error.png[]
+
+此问题暂无法解决，尝试使用系统默认用户或者从数据库修改用户状态为已验证。
+
+== 配置 MYSQL 数据库
+
+=== 配置数据源
+
+创建数据库：``drop schema if exists uaa; create schema uaa``。
+
+打开文件 uaa/src/main/resources/uaa.yml ，修改数据库相关配置：
+
+image::uaa/mysql.png[]
+
+笔者只改了密码，其他都采用默认配置，读者根据实际需要修改。
+
+=== 修改 groups 表名
+
+笔者使用 MYSQL 8.0， groups 是关键字，需要修改为 **\`groups`**。
+
+打开目录 server/src/main/resources/org/cloudfoundry/identity/uaa/db/mysql ，
+修改目录下所有文件：将所有**groups**替换成**\`groups`**，使用单词区分大小写精确匹配。
+
+Java 源码中也涉及到很多需要修改的：
+
+image::uaa/group_class.png[]
+
+=== 修改 DEFAULT_GENERATED
+
+在 MYSQL 8.0 中， 不能使用 DEFAULT_GENERATED ， 替换为空：
+
+image::uaa/DEFAULT_GENERATED.png[]
+
+== 登陆系统
+
+从数据库 users 表中查看用户信息：
+
+image::uaa/users.png[]
+
+上面三个是系统默认的，都已经通过验证了；
+最底下是笔者创建的，还没有通过验证，手动修改为已验证。
+然后登陆系统：
+
+image::uaa/index.png[]
+
+
+
+== 相关类
+
+* AccountsController
+* EmailAccountCreationService
+* EmailService
+////
+

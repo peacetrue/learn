@@ -1,5 +1,5 @@
-name: peacetrue-template-gradle
-title: gradle 模板项目
+name: learn
+title: 记录学到的知识
 version: master
 start_page: ROOT:index.adoc
 nav:
