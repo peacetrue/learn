@@ -1,6 +1,9 @@
 name: learn
-title: 记录学到的知识
+title: 零碎知识
 version: master
+asciidoc:
+  attributes:
+    numbered: ''
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
