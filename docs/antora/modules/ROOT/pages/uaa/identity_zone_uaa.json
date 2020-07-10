@@ -1,0 +1,136 @@
+{
+  "clientSecretPolicy": {
+    "minLength": 0,
+    "maxLength": 255,
+    "requireUpperCaseCharacter": 0,
+    "requireLowerCaseCharacter": 0,
+    "requireDigit": 0,
+    "requireSpecialCharacter": 0
+  },
+  "tokenPolicy": {
+    "accessTokenValidity": 43200,
+    "refreshTokenValidity": 2592000,
+    "jwtRevocable": false,
+    "refreshTokenUnique": false,
+    "refreshTokenFormat": "jwt",
+    "activeKeyId": null
+  },
+  "samlConfig": {
+    "assertionSigned": true,
+    "requestSigned": true,
+    "wantAssertionSigned": true,
+    "wantAuthnRequestSigned": false,
+    "assertionTimeToLiveSeconds": 600,
+    "activeKeyId": "legacy-saml-key",
+    "keys": {
+      "legacy-saml-key": {
+        "key": "-----BEGIN RSA PRIVATE KEY-----\nMIICXQIBAAKBgQDHtC5gUXxBKpEqZTLkNvFwNGnNIkggNOwOQVNbpO0WVHIivig5\nL39WqS9u0hnA+O7MCA/KlrAR4bXaeVVhwfUPYBKIpaaTWFQR5cTR1UFZJL/OF9vA\nfpOwznoD66DDCnQVpbCjtDYWX+x6imxn8HCYxhMol6ZnTbSsFW6VZjFMjQIDAQAB\nAoGAVOj2Yvuigi6wJD99AO2fgF64sYCm/BKkX3dFEw0vxTPIh58kiRP554Xt5ges\n7ZCqL9QpqrChUikO4kJ+nB8Uq2AvaZHbpCEUmbip06IlgdA440o0r0CPo1mgNxGu\nlhiWRN43Lruzfh9qKPhleg2dvyFGQxy5Gk6KW/t8IS4x4r0CQQD/dceBA+Ndj3Xp\nubHfxqNz4GTOxndc/AXAowPGpge2zpgIc7f50t8OHhG6XhsfJ0wyQEEvodDhZPYX\nkKBnXNHzAkEAyCA76vAwuxqAd3MObhiebniAU3SnPf2u4fdL1EOm92dyFs1JxyyL\ngu/DsjPjx6tRtn4YAalxCzmAMXFSb1qHfwJBAM3qx3z0gGKbUEWtPHcP7BNsrnWK\nvw6By7VC8bk/ffpaP2yYspS66Le9fzbFwoDzMVVUO/dELVZyBnhqSRHoXQcCQQCe\nA2WL8S5o7Vn19rC0GVgu3ZJlUrwiZEVLQdlrticFPXaFrn3Md82ICww3jmURaKHS\nN+l4lnMda79eSp3OMmq9AkA0p79BvYsLshUJJnvbk76pCjR28PK4dV1gSDUEqQMB\nqy45ptdwJLqLJCeNoR0JUcDNIRhOCuOPND7pcMtX6hI/\n-----END RSA PRIVATE KEY-----\n",
+        "passphrase": "password",
+        "certificate": "-----BEGIN CERTIFICATE-----\nMIIDSTCCArKgAwIBAgIBADANBgkqhkiG9w0BAQQFADB8MQswCQYDVQQGEwJhdzEO\nMAwGA1UECBMFYXJ1YmExDjAMBgNVBAoTBWFydWJhMQ4wDAYDVQQHEwVhcnViYTEO\nMAwGA1UECxMFYXJ1YmExDjAMBgNVBAMTBWFydWJhMR0wGwYJKoZIhvcNAQkBFg5h\ncnViYUBhcnViYS5hcjAeFw0xNTExMjAyMjI2MjdaFw0xNjExMTkyMjI2MjdaMHwx\nCzAJBgNVBAYTAmF3MQ4wDAYDVQQIEwVhcnViYTEOMAwGA1UEChMFYXJ1YmExDjAM\nBgNVBAcTBWFydWJhMQ4wDAYDVQQLEwVhcnViYTEOMAwGA1UEAxMFYXJ1YmExHTAb\nBgkqhkiG9w0BCQEWDmFydWJhQGFydWJhLmFyMIGfMA0GCSqGSIb3DQEBAQUAA4GN\nADCBiQKBgQDHtC5gUXxBKpEqZTLkNvFwNGnNIkggNOwOQVNbpO0WVHIivig5L39W\nqS9u0hnA+O7MCA/KlrAR4bXaeVVhwfUPYBKIpaaTWFQR5cTR1UFZJL/OF9vAfpOw\nznoD66DDCnQVpbCjtDYWX+x6imxn8HCYxhMol6ZnTbSsFW6VZjFMjQIDAQABo4Ha\nMIHXMB0GA1UdDgQWBBTx0lDzjH/iOBnOSQaSEWQLx1syGDCBpwYDVR0jBIGfMIGc\ngBTx0lDzjH/iOBnOSQaSEWQLx1syGKGBgKR+MHwxCzAJBgNVBAYTAmF3MQ4wDAYD\nVQQIEwVhcnViYTEOMAwGA1UEChMFYXJ1YmExDjAMBgNVBAcTBWFydWJhMQ4wDAYD\nVQQLEwVhcnViYTEOMAwGA1UEAxMFYXJ1YmExHTAbBgkqhkiG9w0BCQEWDmFydWJh\nQGFydWJhLmFyggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEEBQADgYEAYvBJ\n0HOZbbHClXmGUjGs+GS+xC1FO/am2suCSYqNB9dyMXfOWiJ1+TLJk+o/YZt8vuxC\nKdcZYgl4l/L6PxJ982SRhc83ZW2dkAZI4M0/Ud3oePe84k8jm3A7EvH5wi5hvCkK\nRpuRBwn3Ei+jCRouxTbzKPsuCVB+1sNyxMTXzf0=\n-----END CERTIFICATE-----\n"
+      }
+    },
+    "disableInResponseToCheck": false,
+    "privateKeyPassword": "password",
+    "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIICXQIBAAKBgQDHtC5gUXxBKpEqZTLkNvFwNGnNIkggNOwOQVNbpO0WVHIivig5\nL39WqS9u0hnA+O7MCA/KlrAR4bXaeVVhwfUPYBKIpaaTWFQR5cTR1UFZJL/OF9vA\nfpOwznoD66DDCnQVpbCjtDYWX+x6imxn8HCYxhMol6ZnTbSsFW6VZjFMjQIDAQAB\nAoGAVOj2Yvuigi6wJD99AO2fgF64sYCm/BKkX3dFEw0vxTPIh58kiRP554Xt5ges\n7ZCqL9QpqrChUikO4kJ+nB8Uq2AvaZHbpCEUmbip06IlgdA440o0r0CPo1mgNxGu\nlhiWRN43Lruzfh9qKPhleg2dvyFGQxy5Gk6KW/t8IS4x4r0CQQD/dceBA+Ndj3Xp\nubHfxqNz4GTOxndc/AXAowPGpge2zpgIc7f50t8OHhG6XhsfJ0wyQEEvodDhZPYX\nkKBnXNHzAkEAyCA76vAwuxqAd3MObhiebniAU3SnPf2u4fdL1EOm92dyFs1JxyyL\ngu/DsjPjx6tRtn4YAalxCzmAMXFSb1qHfwJBAM3qx3z0gGKbUEWtPHcP7BNsrnWK\nvw6By7VC8bk/ffpaP2yYspS66Le9fzbFwoDzMVVUO/dELVZyBnhqSRHoXQcCQQCe\nA2WL8S5o7Vn19rC0GVgu3ZJlUrwiZEVLQdlrticFPXaFrn3Md82ICww3jmURaKHS\nN+l4lnMda79eSp3OMmq9AkA0p79BvYsLshUJJnvbk76pCjR28PK4dV1gSDUEqQMB\nqy45ptdwJLqLJCeNoR0JUcDNIRhOCuOPND7pcMtX6hI/\n-----END RSA PRIVATE KEY-----\n",
+    "certificate": "-----BEGIN CERTIFICATE-----\nMIIDSTCCArKgAwIBAgIBADANBgkqhkiG9w0BAQQFADB8MQswCQYDVQQGEwJhdzEO\nMAwGA1UECBMFYXJ1YmExDjAMBgNVBAoTBWFydWJhMQ4wDAYDVQQHEwVhcnViYTEO\nMAwGA1UECxMFYXJ1YmExDjAMBgNVBAMTBWFydWJhMR0wGwYJKoZIhvcNAQkBFg5h\ncnViYUBhcnViYS5hcjAeFw0xNTExMjAyMjI2MjdaFw0xNjExMTkyMjI2MjdaMHwx\nCzAJBgNVBAYTAmF3MQ4wDAYDVQQIEwVhcnViYTEOMAwGA1UEChMFYXJ1YmExDjAM\nBgNVBAcTBWFydWJhMQ4wDAYDVQQLEwVhcnViYTEOMAwGA1UEAxMFYXJ1YmExHTAb\nBgkqhkiG9w0BCQEWDmFydWJhQGFydWJhLmFyMIGfMA0GCSqGSIb3DQEBAQUAA4GN\nADCBiQKBgQDHtC5gUXxBKpEqZTLkNvFwNGnNIkggNOwOQVNbpO0WVHIivig5L39W\nqS9u0hnA+O7MCA/KlrAR4bXaeVVhwfUPYBKIpaaTWFQR5cTR1UFZJL/OF9vAfpOw\nznoD66DDCnQVpbCjtDYWX+x6imxn8HCYxhMol6ZnTbSsFW6VZjFMjQIDAQABo4Ha\nMIHXMB0GA1UdDgQWBBTx0lDzjH/iOBnOSQaSEWQLx1syGDCBpwYDVR0jBIGfMIGc\ngBTx0lDzjH/iOBnOSQaSEWQLx1syGKGBgKR+MHwxCzAJBgNVBAYTAmF3MQ4wDAYD\nVQQIEwVhcnViYTEOMAwGA1UEChMFYXJ1YmExDjAMBgNVBAcTBWFydWJhMQ4wDAYD\nVQQLEwVhcnViYTEOMAwGA1UEAxMFYXJ1YmExHTAbBgkqhkiG9w0BCQEWDmFydWJh\nQGFydWJhLmFyggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEEBQADgYEAYvBJ\n0HOZbbHClXmGUjGs+GS+xC1FO/am2suCSYqNB9dyMXfOWiJ1+TLJk+o/YZt8vuxC\nKdcZYgl4l/L6PxJ982SRhc83ZW2dkAZI4M0/Ud3oePe84k8jm3A7EvH5wi5hvCkK\nRpuRBwn3Ei+jCRouxTbzKPsuCVB+1sNyxMTXzf0=\n-----END CERTIFICATE-----\n"
+  },
+  "corsPolicy": {
+    "xhrConfiguration": {
+      "allowedOrigins": [
+        ".*"
+      ],
+      "allowedOriginPatterns": [],
+      "allowedUris": [
+        ".*"
+      ],
+      "allowedUriPatterns": [],
+      "allowedHeaders": [
+        "Accept",
+        "Authorization",
+        "Content-Type"
+      ],
+      "allowedMethods": [
+        "GET"
+      ],
+      "allowedCredentials": false,
+      "maxAge": 1728000
+    },
+    "defaultConfiguration": {
+      "allowedOrigins": [
+        ".*"
+      ],
+      "allowedOriginPatterns": [],
+      "allowedUris": [
+        ".*"
+      ],
+      "allowedUriPatterns": [],
+      "allowedHeaders": [
+        "Accept",
+        "Authorization",
+        "Content-Type"
+      ],
+      "allowedMethods": [
+        "GET"
+      ],
+      "allowedCredentials": false,
+      "maxAge": 1728000
+    }
+  },
+  "links": {
+    "logout": {
+      "redirectUrl": "/login",
+      "redirectParameterName": "redirect",
+      "disableRedirectParameter": false,
+      "whitelist": null
+    },
+    "selfService": {
+      "selfServiceLinksEnabled": true,
+      "signup": null,
+      "passwd": null
+    }
+  },
+  "prompts": [
+    {
+      "name": "username",
+      "type": "text",
+      "text": "Email"
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "text": "Password"
+    },
+    {
+      "name": "passcode",
+      "type": "password",
+      "text": "Temporary Authentication Code ( Get one at http://localhost:8080/uaa/passcode )"
+    }
+  ],
+  "idpDiscoveryEnabled": false,
+  "accountChooserEnabled": false,
+  "userConfig": {
+    "defaultGroups": [
+      "openid",
+      "scim.me",
+      "cloud_controller.read",
+      "cloud_controller.write",
+      "cloud_controller_service_permissions.read",
+      "password.write",
+      "scim.userids",
+      "uaa.user",
+      "approvals.me",
+      "oauth.approvals",
+      "profile",
+      "roles",
+      "user_attributes",
+      "uaa.offline_token"
+    ]
+  },
+  "mfaConfig": {
+    "enabled": false,
+    "identityProviders": [
+      "uaa",
+      "ldap"
+    ]
+  }
+}

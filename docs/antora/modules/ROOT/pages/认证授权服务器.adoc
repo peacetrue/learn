@@ -1,0 +1,64 @@
+= 认证授权服务器
+
+笔者最近想搭建一个基于 OAuth2 和 OIDC 的认证授权服务器。
+
+
+尝试使用 spring-security-oauth2 ，
+但 spring-security-oauth2 只支持授权不支持认证。
+
+本文描述如何找到一些好用的基于 OIDC 和 OAuth2 认证授权服务实现。
+
+打开网页 https://openid.net/developers/certified/[认证的 OpenID 实现^]，
+滚到至 Java 区域，然后逐个试验。
+
+== Connect2id Server 6.1.2a
+
+=== 快速开始
+
+打开页面 https://connect2id.com/products/server/docs/quick-start ，按提示步骤操作。
+
+. 下载得到： connect2id-server-9.5
+. 启动服务： connect2id-server-9.5/tomcat/bin/startup.sh（本地 Java 版本需要 11+ ）
+
+发现启动不了，控制台没有日志输出， connect2id-server-9.5/tomcat/logs 下也没有日志文件。
+
+换用启动命令 `connect2id-server-9.5/tomcat/bin/catalina.sh run` ，
+发现是 8005 端口被占用了：
+
+.8005端口占用
+image::8005端口占用.png[]
+
+关闭该端口，重新启动，打开页面 http://127.0.0.1:8080/manager ，输入账号密码 admin/secret 。
+
+浏览页面，提供了完善的后端接口和登陆授权页面，没有提供受信客户端账号管理页面。
+部署方式只提供 war 包，不提供源码。
+
+
+
+
+== Gluu Server 3.1.1
+
+打开官网 https://www.gluu.org/ 。
+页面做得比较新颖，带有商业性质的，可以提供技术支持。
+
+Github 仓库 https://github.com/GluuFederation/oxAuth 最近也有更新，维护很积极。
+
+=== 快速开始
+
+打开页面 https://www.gluu.org/docs/gluu-server/installation-guide/ 。
+产品比较固化，安装比较规范，如何扩展呢。
+
+== MITREid Connect
+
+
+
+== OIDC OP Overlay for Shibboleth IdP v3.2.1 version 1.0
+
+更新频率低（8个月前），受关注度低（star 75），不如上面那些，放弃尝试。
+
+== Cobalt V1.0
+
+链接地址 https://www.viewds.com/products/cobalt.html 打不开，放弃尝试。
+
+
+

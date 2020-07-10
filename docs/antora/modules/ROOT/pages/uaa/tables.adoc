@@ -1,0 +1,54 @@
+= UAA 数据库表分析
+
+本文主要分析 UAA 中的数据库表结构。阅读 link:concepts.adoc[UAA 概念^] 有助于您更好地理解本文所述内容。
+
+分析完所有表之后，总结出的通用字段：
+
+* created：创建时间
+* lastmodified：最近修改时间
+* version：版本号
+
+== identity_zone：身份区域
+
+*身份区域* 用于将整套系统划归到不同的租户。所有其他表都有一个 `identity_zone_id` 字段关联到 *身份区域*。
+
+
+== ddd
+
+.基础信息
+* identity_provider：身份认证提供者
+* identity_zone：身份区域
+* mfa_providers：Multi-Factor Authentication 多重身份认证提供者
+* service_provider：服务提供者
+
+.用户相关
+* users：用户表，关联 identity_zone
+* user_info：用户信息表
+* groups：分组表
+* group_membership：分组成员关系表，关联 users 和 groups
+
+.受信方
+* oauth_client_details：受信方，客户端
+* oauth_code：认证码
+* revocable_tokens：可废除的令牌
+* authz_approvals：授权许可，授权码认证时，用户确认授权后有记录。
+
+SCIM: System for Cross-domain Identity Management
+
+== 初始化数据
+
+* schema_version：flyway 版本记录
+* identity_zone：uaa 租户，向后兼容的系统区域。
+
+== default 环境
+
+初始化默认用户和受信方作为测试数据。
+
+包括以下表：
+
+* users
+* group_membership
+* oauth_client_details
+* external_group_mapping
+
+== 禁用
