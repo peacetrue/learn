@@ -1,2 +1,4 @@
 * xref:index.adoc[简介]
-* xref:uaa.adoc[UAA 教程]
+* UAA
+** xref:uaa/concepts.adoc[概念]
+** xref:uaa/localize.adoc[本地部署]
