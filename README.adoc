@@ -1,4 +1,4 @@
-= 学习
+= 零碎笔记
 xiayx <xiayouxue@hotmail.com>
 v1.0, 2019-10-16: SNAPSHOT
 
