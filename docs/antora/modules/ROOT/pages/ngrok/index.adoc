@@ -1,0 +1,132 @@
+= Ngrok
+
+本文介绍 ngrok 的安装和使用。
+
+== 参考地址
+
+* 官网地址 主页： https://github.com/inconshreveable/ngrok
+* 官网地址 开发者文档： https://github.com/inconshreveable/ngrok/blob/master/docs/DEVELOPMENT.md
+* 参考地址： https://studygolang.com/articles/2655
+
+== 官网开发者文档缺陷
+
+官网开发者文档未提供自定义证书生成相关信息，所以需要参考其他文章
+
+== 生成自签名证书
+
+[source%nowrap,shell]
+----
+$ openssl genrsa -out rootCA.key 2048
+$ openssl req -x509 -new -nodes -key rootCA.key -subj "/CN=ngrok.peacetrue.cn" -days 5000 -out rootCA.pem
+$ openssl genrsa -out device.key 2048
+$ openssl req -new -key device.key -subj "/CN=ngrok.peacetrue.cn" -out device.csr
+$ openssl x509 -req -in device.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out device.crt -days 5000
+----
+
+.拷贝到指定目录
+----
+cp rootCA.pem assets/client/tls/ngrokroot.crt
+cp device.crt assets/server/tls/snakeoil.crt
+cp device.key assets/server/tls/snakeoil.key
+----
+
+----
+\cp -f Apache/2_peacetrue.cn.crt /root/ngrok-1.7.1/assets/server/tls/snakeoil.crt
+\cp -f Apache/3_peacetrue.cn.key /root/ngrok-1.7.1/assets/server/tls/snakeoil.key
+\cp -f Apache/1_root_bundle.crt /root/ngrok-1.7.1/assets/client/tls/ngrokroot.crt
+\cp -f Apache/2_peacetrue.cn.crt  /root/ngrok-1.7.1/assets/client/tls/snakeoilca.crt
+----
+
+----
+# /root/peacetrue/ngrok.peacetrue.cn
+# /root/ngrok-1.7.1/assets/server/tls/snakeoil.crt
+\cp -f Apache/2_ngrok.peacetrue.cn.crt /root/ngrok-1.7.1/assets/server/tls/snakeoil.crt
+\cp -f Apache/3_ngrok.peacetrue.cn.key /root/ngrok-1.7.1/assets/server/tls/snakeoil.key
+\cp -f Apache/1_root_bundle.crt ngrok-1.7.1/assets/client/tls/ngrokroot.crt
+----
+
+----
+# /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok.peacetrue.cn
+# /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1
+\cp -f Apache/2_ngrok.peacetrue.cn.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/server/tls/snakeoil.crt
+\cp -f Apache/3_ngrok.peacetrue.cn.key /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/server/tls/snakeoil.key
+\cp -f Apache/1_root_bundle.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/client/tls/ngrokroot.crt
+\cp -f Apache/2_ngrok.peacetrue.cn.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/client/tls/snakeoilca.crt
+----
+
+----
+# /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/peacetrue.cn
+# /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1
+\cp -f Apache/2_peacetrue.cn.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/server/tls/snakeoil.crt
+\cp -f Apache/3_peacetrue.cn.key /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/server/tls/snakeoil.key
+\cp -f Apache/1_root_bundle.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/client/tls/ngrokroot.crt
+\cp -f Apache/2_peacetrue.cn.crt /Users/xiayx/Documents/Projects/learn/docs/antora/modules/ROOT/pages/ngrok/ngrok-1.7.1/assets/client/tls/snakeoilca.crt
+----
+
+make release-all
+
+
+参考 <<关于 cp 覆盖提示>>，改写命令：
+
+.拷贝到指定目录
+----
+\cp -f rootCA.pem assets/client/tls/ngrokroot.crt
+\cp -f device.crt assets/server/tls/snakeoil.crt
+\cp -f device.key assets/server/tls/snakeoil.key
+----
+
+== 关于 cp 覆盖提示
+
+https://blog.csdn.net/iw1210/article/details/46550707
+
+== unrecognized import path "code.google.com/p/log4go"
+
+执行命令 ``make release-client``，出现如下提示：
+
+----
+bin/go-bindata -nomemcopy -pkg=assets -tags=release \
+                -debug=false \
+                -o=src/ngrok/client/assets/assets_release.go \
+                assets/client/...
+bin/go-bindata -nomemcopy -pkg=assets -tags=release \
+                -debug=false \
+                -o=src/ngrok/server/assets/assets_release.go \
+                assets/server/...
+go get -tags 'release' -d -v ngrok/...
+package code.google.com/p/log4go: unrecognized import path "code.google.com/p/log4go" (https fetch: Get https://code.google.com/p/log4go?go-get=1: dial tcp 216.58.200.46:443: i/o timeout)
+make: *** [deps] Error 1
+----
+
+参考 https://www.cnblogs.com/52php/p/6810115.html
+
+查找到 **code.google.com/p/log4go** 位于文件 **/src/ngrok/log4go** 中， 将其修改为 **github.com/thinkboy/log4go**。
+
+== 启动服务端
+
+``./bin/ngrokd -domain="ngrok.peacetrue.cn" -httpAddr=":8080" -httpsAddr=":8081"``
+
+``./bin/ngrokd -domain="peacetrue.cn" -httpAddr=":8010" -httpsAddr=":8011"``
+
+改写为后台运行：
+
+``nohup /root/ngrok-1.7.1/bin/ngrokd -domain="peacetrue.cn" -httpAddr=":8010" -httpsAddr=":8011" &``
+
+== 启动客户端
+
+``./ngrok-1.7.1/bin/ngrok -subdomain xiamen -config=ngrok.cfg 3000``
+
+``./ngrok-1.7.1/bin/ngrok -subdomain microservice -config=ngrok.cfg 443``
+``./ngrok-1.7.1/bin/ngrok -subdomain ngrok -config=ngrok.cfg 80``
+``./ngrok-1.7.1/bin/ngrok -subdomain www -config=ngrok.cfg 443``
+
+改为为后台运行：
+
+* ``cd /Users/xiayx/Documents/Projects/peacetrue-microservice/services/ngrok``
+* ``nohup ./ngrok-1.7.1/bin/ngrok -subdomain xiamen -config=ngrok.cfg 8091 &``
+* ``nohup ./ngrok-1.7.1/bin/ngrok -subdomain oauth2-client -config=ngrok.cfg 8530 &``
+* ``nohup ./ngrok-1.7.1/bin/ngrok -subdomain www -config=ngrok.cfg 443 &``
+* /Users/xiayx/Documents/Projects/peacetrue-microservice/services/ngrok/ngrok-1.7.1/bin/ngrok -subdomain xiamen -config=ngrok.cfg 8091
+
+//
+* ./ngrok http 8088
+* ./ngrok http 443
