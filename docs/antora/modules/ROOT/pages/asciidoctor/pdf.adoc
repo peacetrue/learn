@@ -1,0 +1,39 @@
+= asciidoctor-pdf
+
+.参考
+* https://github.com/asciidoctor/asciidoctor-pdf
+* https://github.com/chloerei/asciidoctor-pdf-cjk-kai_gen_gothic
+
+== 术语
+
+* cjk：中日韩
+* 文字相关：字符集｜字体｜字形
+
+== asciidoctor-pdf-cjk-kai_gen_gothic
+
+* gem 目录：/Library/Ruby/Gems/2.6.0/gems/
+* kai_gen_gothic 命令位置：/Library/Ruby/Gems/2.6.0/gems/asciidoctor-pdf-cjk-kai_gen_gothic-0.1.1/exe/asciidoctor-pdf-cjk-kai_gen_gothic-install
+* kai_gen_gothic 主题存储目录：/Library/Ruby/Gems/2.6.0/gems/asciidoctor-pdf-cjk-kai_gen_gothic-0.1.1/data
+* Fonts:
+** KaiGenGothic SIL Open Font License, repo: https://github.com/akiratw/kaigen-gothic
+** Roboto Mono Apache 2 license, repo: https://github.com/google/fonts
+
+== `convert_colist': undefined method `-' for nil:NilClass (NoMethodError)
+
+/Library/Ruby/Gems/2.6.0/gems/asciidoctor-pdf-1.5.3/lib/asciidoctor/pdf/converter.rb:1042:in `convert_colist': undefined method `-' for nil:NilClass (NoMethodError)
+
+* 1023 行：list_margin_bottom = @theme.prose_margin_bottom
+* 1024 行：margin_bottom list_margin_bottom - @theme.outline_list_item_spacing
+
+中文主题下没有找到变量 prose_margin_bottom，打开主题文件 data/themes/KaiGenGothicCN-theme.yml
+
+----
+prose:
+# margin_top: 0
+# margin_bottom: $vertical_rhythm 解开改行注释
+----
+
+
+
+
+
