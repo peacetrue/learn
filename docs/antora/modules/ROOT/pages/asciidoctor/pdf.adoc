@@ -3,6 +3,7 @@
 .参考
 * https://github.com/asciidoctor/asciidoctor-pdf
 * https://github.com/chloerei/asciidoctor-pdf-cjk-kai_gen_gothic
+* https://github.com/asciidoctor/asciidoctor/issues/1359
 
 == 术语
 
