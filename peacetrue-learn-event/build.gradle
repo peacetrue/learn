@@ -1,4 +1,0 @@
-dependencies {
-    compile 'org.springframework:spring-context-support'
-    testCompile 'org.springframework:spring-test'
-}

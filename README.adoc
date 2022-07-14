@@ -1,0 +1,7 @@
+= 学习
+peace <xiayouxue@hotmail.com>
+v1.0, 2021-06-22: SNAPSHOT
+:app-name: peacetrue-learn
+
+
+详情参考 https://peacetrue.cn/summarize/peacetrue-learn/index.html[安宁的博客^]。

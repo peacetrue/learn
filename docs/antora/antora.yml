@@ -1,0 +1,11 @@
+name: peacetrue-learn
+title: 学习
+version: master
+asciidoc:
+  attributes:
+    placeholder: ''
+    numbered: '@'
+    app-name: peacetrue-learn
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
