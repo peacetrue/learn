@@ -12,3 +12,7 @@
 
 * 包含 gradle-wrapper.jar
 * 排除 .idea
+
+=== 0.0.2
+
+index.adoc 添加说明。
