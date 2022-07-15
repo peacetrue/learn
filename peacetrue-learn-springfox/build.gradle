@@ -1,0 +1,13 @@
+plugins {
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
+}
+
+group "com.github.peacetrue.learn"
+version "${peaceLearnSwaggerVersion}${tailSnapshot}"
+description "学习 springfox"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+}

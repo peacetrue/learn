@@ -2,13 +2,6 @@
 
 :numbered!: ''
 
-== 0.0.0
+== 2.0.0
 
-清空资源库，作为后续开发的初始分支。
-
-=== 0.0.1
-
-配置 .gitignore：
-
-* 包含 gradle-wrapper.jar
-* 排除 .idea
+实现 Springfox 正常启动运行。
