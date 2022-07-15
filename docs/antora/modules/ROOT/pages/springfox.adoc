@@ -1,0 +1,14 @@
+= Springfox
+
+参考：
+
+* https://swagger.io
+* https://github.com/springfox/springfox
+* https://springfox.github.io/springfox/docs/current/
+
+运行 `SpringfoxApplication`，访问 http://localhost:8080/swagger-ui/ ：
+
+image::springfox/image-2022-07-14-20-14-18-362.png[]
+
+WARNING: 地址 http://localhost:8080/swagger-ui 无效
+
