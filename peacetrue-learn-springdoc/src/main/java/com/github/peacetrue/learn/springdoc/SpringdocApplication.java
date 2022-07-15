@@ -1,11 +1,11 @@
-package com.github.peacetrue.learn.springfox;
+package com.github.peacetrue.learn.springdoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringfoxApplication {
+public class SpringdocApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringfoxApplication.class, args);
+        SpringApplication.run(SpringdocApplication.class, args);
     }
 }
