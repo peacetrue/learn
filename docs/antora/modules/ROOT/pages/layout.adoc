@@ -1,0 +1,36 @@
+= 布局
+
+== 圣杯布局
+
+参考： https://philipwalton.github.io/solved-by-flexbox/ 。
+
+=== 基础布局
+
+////
+mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail
+mkdir -p ../docs/antora/modules/ROOT/assets/images
+ln $(pwd)/holy-grail/basic.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/basic.html
+////
+
+[source%nowrap,bash]
+----
+mkdir peacetrue-learn-layout && cd peacetrue-learn-layout
+mkdir holy-grail
+
+tee holy-grail/basic.html <<EOF
+include::example$peacetrue-learn-layout/holy-grail/basic.html[]
+EOF
+
+open -a 'Google Chrome' holy-grail/basic.html
+----
+
+全屏展示效果：
+
+image::peacetrue-learn-layout/image-2022-07-19-05-07-42-529.png[]
+
+最小屏展示效果：
+
+image::peacetrue-learn-layout/image-2022-07-19-05-07-03-477.png[]
+
+页面内容自动缩放，具有一致性观感。
+
