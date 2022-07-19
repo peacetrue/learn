@@ -62,3 +62,25 @@ image::peacetrue-learn-layout/image-2022-07-19-08-28-39-681.png[]
 页面内容自动缩放，具有一致性观感。
 
 
+==== 独立滚动
+
+nav、content、aside 区域可独立滚动。
+
+////
+ln $(pwd)/holy-grail/practicality-scroll.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/practicality-scroll.html
+////
+
+[source%nowrap,bash]
+----
+tee holy-grail/practicality-scroll.html <<EOF
+include::example$peacetrue-learn-layout/holy-grail/practicality-scroll.html[]
+EOF
+
+open -a 'Google Chrome' holy-grail/practicality-scroll.html
+----
+
+全屏展示效果：
+
+image::peacetrue-learn-layout/Kapture 2022-07-20 at 05.20.27.gif[]
+
+页面内容自动缩放，具有一致性观感。
