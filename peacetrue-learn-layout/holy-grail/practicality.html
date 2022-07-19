@@ -41,6 +41,14 @@
             background-color: red;
             /*行方向，此元素占据容器内剩余宽度*/
             flex: 1;
+            /*容器内元素列方向排序*/
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            /*列方向，此元素占据容器内剩余高度*/
+            flex: 1;
         }
 
         aside {
@@ -49,20 +57,6 @@
 
         footer {
             background-color: yellow;
-        }
-
-        header, footer {
-            height: 50px;
-            overflow: hidden;
-        }
-
-        nav, aside {
-            width: 100px;
-            overflow: scroll;
-        }
-
-        main {
-            overflow: scroll;
         }
     </style>
 </head>
@@ -74,18 +68,20 @@
         <!--通常宽度固定，高度溢出滚动-->
         <nav>nav</nav>
         <!--通常宽度自适应，高度溢出滚动-->
-        <main>main</main>
+        <main>
+            <div class="content">content</div>
+            <!--通常高度固定-->
+            <footer>footer</footer>
+        </main>
         <!--通常宽度固定，高度溢出滚动-->
         <aside>aside</aside>
     </div>
-    <!--通常高度固定-->
-    <footer>footer</footer>
 </div>
 </body>
 <script>
     let main = document.getElementsByTagName("main").item(0);
     for (let i = 0; i < 100; i++) {
-        main.innerHTML += "<div>main</div>";
+        // main.innerHTML += "<div>main</div>";
     }
 </script>
 </html>

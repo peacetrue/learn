@@ -34,3 +34,31 @@ image::peacetrue-learn-layout/image-2022-07-19-05-07-03-477.png[]
 
 页面内容自动缩放，具有一致性观感。
 
+=== 实用布局
+
+////
+mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail
+mkdir -p ../docs/antora/modules/ROOT/assets/images
+ln $(pwd)/holy-grail/practicality.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/practicality.html
+////
+
+[source%nowrap,bash]
+----
+tee holy-grail/practicality.html <<EOF
+include::example$peacetrue-learn-layout/holy-grail/practicality.html[]
+EOF
+
+open -a 'Google Chrome' holy-grail/practicality.html
+----
+
+全屏展示效果：
+
+image::peacetrue-learn-layout/image-2022-07-19-08-28-22-275.png[]
+
+最小屏展示效果：
+
+image::peacetrue-learn-layout/image-2022-07-19-08-28-39-681.png[]
+
+页面内容自动缩放，具有一致性观感。
+
+
