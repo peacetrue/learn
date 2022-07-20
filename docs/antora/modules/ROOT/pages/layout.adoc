@@ -1,27 +1,70 @@
 = 布局
 
-== 圣杯布局
+.Vertical Direction（垂直方向）
+* top： t
+* middle： m
+* bottom： b
 
-参考： https://philipwalton.github.io/solved-by-flexbox/ 。
+.Horizontal Direction（水平方向）
+* left： l
+* center： c
+* right： r
 
-=== 基础布局
+.Semantic Elements（ https://www.w3schools.com/html/html5_semantic_elements.asp[语义元素^]）
+* header
+* main
+* footer
+* nav
+* article
+* aside
+
+.布局方式
+|===
+|名称 |描述 |使用场景 |滚动元素 |组成元素 |特点 |效果
+
+|tmb
+|上中下布局
+|主页
+|容器
+|header、main、footer
+|header 位置固定、main 高度自适应
+|
+
+|tm(lcr)b
+|上中（左中右）下布局
+|未知
+|nav、article、aside
+|上述 6 种
+|header、footer 位置固定，各自区域内滚动
+|
+
+|tm(lc(r))
+|Column 2, row 2
+|Column 3, row 2
+|Column 1, row 3
+|Column 2, row 3
+|Column 3, row 3
+|===
+
+每块区域使用不同的背景色以示区别。
+
+== 上中（左中右）下
 
 ////
-mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail
+mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout
 mkdir -p ../docs/antora/modules/ROOT/assets/images
-ln $(pwd)/holy-grail/basic.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/basic.html
+ln "$(pwd)/tm(lcr)b.html" ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout
 ////
 
 [source%nowrap,bash]
 ----
 mkdir peacetrue-learn-layout && cd peacetrue-learn-layout
-mkdir holy-grail
 
-tee holy-grail/basic.html <<EOF
-include::example$peacetrue-learn-layout/holy-grail/basic.html[]
+tee tm(lcr)b.html <<EOF
+include::example$peacetrue-learn-layout/tm(lcr)b.html[]
 EOF
 
-open -a 'Google Chrome' holy-grail/basic.html
+open -a 'Google Chrome' tm(lcr)b.html
 ----
 
 全屏展示效果：

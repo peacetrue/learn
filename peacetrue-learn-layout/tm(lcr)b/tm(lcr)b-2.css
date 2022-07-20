@@ -1,0 +1,15 @@
+main {
+    height: 0;
+    overflow: auto;
+}
+
+nav, aside {
+    overflow: auto;
+    position: sticky;
+    top: 0;
+}
+
+article {
+    /*height: fit-content;*/
+}
+
