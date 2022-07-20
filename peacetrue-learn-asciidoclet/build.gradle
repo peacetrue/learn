@@ -1,0 +1,27 @@
+plugins {
+    //TODO 提供运行时环境
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
+}
+
+group "com.github.peacetrue.learn"
+version "${peaceLearnAsciidocletVersion}${tailSnapshot}"
+description "学习 Asciidoclet"
+
+configurations {
+    asciidoclet
+}
+
+dependencies {
+    asciidoclet "org.asciidoctor:asciidoclet:1.+"
+}
+
+javadoc {
+    options.docletpath = configurations.asciidoclet.files.asType(List)
+    options.doclet = 'org.asciidoctor.Asciidoclet'
+    options.overview = "src/main/java/overview.adoc"
+    options.addStringOption "-base-dir", "${projectDir}"
+    options.addStringOption "-attribute",
+            "name=${project.name}," +
+                    "version=${project.version}," +
+                    "title-link=https://example.com[${project.name} ${project.version}]"
+}

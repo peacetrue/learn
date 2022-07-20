@@ -1,0 +1,15 @@
+= Asciidoclet
+
+参考：
+
+* https://docs.asciidoctor.org/asciidoclet/latest/
+* https://oss.sonatype.org/service/local/repositories/releases/archive/org/asciidoctor/asciidoclet/1.5.4/asciidoclet-1.5.4-javadoc.jar/!/index.html
+
+[source%nowrap,java]
+--
+cd peacetrue-learn-asciidoclet
+gradlew javadocJar
+open -a 'Google Chrome' build/docs/javadoc/index.html
+--
+
+image::peacetrue-learn-asciidoclet/image-2022-07-20-20-07-14-613.png[]

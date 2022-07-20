@@ -15,4 +15,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "peacetrue-learn-springdoc"
+rootProject.name = "peacetrue-learn-asciidoclet"
