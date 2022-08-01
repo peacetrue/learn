@@ -1,0 +1,12 @@
+= React
+
+参考：
+
+* https://reactjs.org/
+
+== 创建模块
+
+[source%nowrap,bash]
+----
+mkdir peacetrue-learn-react && cd peacetrue-learn-react
+----
