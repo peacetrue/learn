@@ -1,129 +1,74 @@
 = 布局
 
-.Vertical Direction（垂直方向）
-* top： t
-* middle： m
-* bottom： b
+本文记录实现网页整体布局的几种方案，希望日后在类似需求上能驾轻就熟。
 
-.Horizontal Direction（水平方向）
-* left： l
-* center： c
-* right： r
+== 语义元素
 
-.Semantic Elements（ https://www.w3schools.com/html/html5_semantic_elements.asp[语义元素^]）
+在布局过程中，会使用到如下 https://www.w3schools.com/html/html5_semantic_elements.asp[语义元素^]：
+
 * header
 * main
 * footer
 * nav
 * article
 * aside
+* section
 
-.布局方式
+== 方位分布
+
+方位按照九宫格划分：
+
+* Vertical Direction（垂直方向）
+. top(t)：上
+. middle(m)：中
+. bottom(b)：下
+
+* Horizontal Direction（水平方向）
+. left(l)：左
+. center(c)：中
+. right(r)：右
+
+示例：
+
+image::peacetrue-learn-layout/image-2022-07-25-06-05-19-469.png[width=50%]
+
+不同的语义元素位于不同的方位上，最终实现了网页的整体布局。
+
+== 布局技术
+
+=== 流动布局
+
+=== 网格布局
+
+== 布局实现
+
+下表记录了 3 种布局方式，名称使用方位的缩写表示（即上述括号中的字母）。
+
 |===
-|名称 |描述 |使用场景 |滚动元素 |组成元素 |特点 |效果
+|名称 |描述 |使用场景 |特点 |效果
 
 |tmb
-|上中下布局
+|上中下 布局
 |主页
-|容器
-|header、main、footer
-|header 位置固定、main 高度自适应
+|header 位置固定，main 高度自适应，全屏滚动
 |
 
 |tm(lcr)b
-|上中（左中右）下布局
-|未知
-|nav、article、aside
-|上述 6 种
-|header、footer 位置固定，各自区域内滚动
+|上中（左中右）下 布局
+|功能页
+|header 位置固定，footer 在底部，拥有 3 种变体
 |
 
-|tm(lc(r))
-|Column 2, row 2
-|Column 3, row 2
-|Column 1, row 3
-|Column 2, row 3
-|Column 3, row 3
+|tm(lc(mb)r)
+|上中(左中(中下)右) 布局
+|功能页
+|header 位置固定，footer 在中间底部，拥有 2 种变体
+|
 |===
 
 每块区域使用不同的背景色以示区别。
 
-== 上中（左中右）下
-
-////
-mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout
-mkdir -p ../docs/antora/modules/ROOT/assets/images
-ln "$(pwd)/tm(lcr)b.html" ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout
-////
-
-[source%nowrap,bash]
-----
-mkdir peacetrue-learn-layout && cd peacetrue-learn-layout
-
-tee tm(lcr)b.html <<EOF
-include::example$peacetrue-learn-layout/tm(lcr)b.html[]
-EOF
-
-open -a 'Google Chrome' tm(lcr)b.html
-----
-
-全屏展示效果：
-
-image::peacetrue-learn-layout/image-2022-07-19-05-07-42-529.png[]
-
-最小屏展示效果：
-
-image::peacetrue-learn-layout/image-2022-07-19-05-07-03-477.png[]
-
-页面内容自动缩放，具有一致性观感。
-
-=== 实用布局
-
-////
-mkdir -p ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail
-mkdir -p ../docs/antora/modules/ROOT/assets/images
-ln $(pwd)/holy-grail/practicality.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/practicality.html
-////
-
-[source%nowrap,bash]
-----
-tee holy-grail/practicality.html <<EOF
-include::example$peacetrue-learn-layout/holy-grail/practicality.html[]
-EOF
-
-open -a 'Google Chrome' holy-grail/practicality.html
-----
-
-全屏展示效果：
-
-image::peacetrue-learn-layout/image-2022-07-19-08-28-22-275.png[]
-
-最小屏展示效果：
-
-image::peacetrue-learn-layout/image-2022-07-19-08-28-39-681.png[]
-
-页面内容自动缩放，具有一致性观感。
+=== 上中下
 
 
-==== 独立滚动
 
-nav、content、aside 区域可独立滚动。
-
-////
-ln $(pwd)/holy-grail/practicality-scroll.html ../docs/antora/modules/ROOT/examples/peacetrue-learn-layout/holy-grail/practicality-scroll.html
-////
-
-[source%nowrap,bash]
-----
-tee holy-grail/practicality-scroll.html <<EOF
-include::example$peacetrue-learn-layout/holy-grail/practicality-scroll.html[]
-EOF
-
-open -a 'Google Chrome' holy-grail/practicality-scroll.html
-----
-
-全屏展示效果：
-
-image::peacetrue-learn-layout/Kapture 2022-07-20 at 05.20.27.gif[]
-
-页面内容自动缩放，具有一致性观感。

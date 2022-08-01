@@ -1,0 +1,13 @@
+= Question in Layout
+
+== DOM
+
+=== createElement by outerHTML
+
+[source%nowrap,javascript]
+----
+let element = document.createElement('div');
+element.insertAdjacentHTML()
+element.outerHTML='<div>outerHTML</div>';
+----
+

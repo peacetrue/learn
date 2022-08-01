@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>position: sticky</title>
+    <style>
+        .container {
+            height: 200px;
+            background-color: cadetblue;
+            overflow: scroll;
+        }
+
+        .container * {
+            margin-top: 20px;
+            background-color: red;
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container"></div>
+</body>
+<script src="../libs/common.js"></script>
+<script>fullContent(document.getElementsByClassName("container").item(0))</script>
+</html>

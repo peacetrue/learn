@@ -1,4 +1,4 @@
-/* article 区域的滚动由 main 区域实现 */
+/*各区域独立滚动*/
 
 main {
     height: 0;
@@ -11,7 +11,4 @@ nav, aside {
     top: 0;
 }
 
-article {
-    height: fit-content;
-}
 

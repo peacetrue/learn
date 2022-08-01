@@ -1,3 +1,5 @@
+/*各区域独立滚动*/
+
 main {
     height: 0;
 }
@@ -5,4 +7,3 @@ main {
 nav, article, aside {
     overflow: auto;
 }
-

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上中(左中(中下)右)</title>
+    <link rel="stylesheet" href="../libs/jquery-ui.css">
+    <link rel="stylesheet" href="../libs/common.css">
+    <script src="../libs/jquery-3.6.0.js"></script>
+    <script src="../libs/jquery-ui.js"></script>
+    <script src="../libs/common.js"></script>
+    <link id="color" href="../tmb/tmb-color.css" rel="stylesheet">
+    <link id="color-2" href="tm(lc(mb)r)-color.css" rel="stylesheet">
+    <link id="size" href="../tmb/tmb-size.css" rel="stylesheet">
+    <link id="size-2" href="tm(lc(mb)r)-size.css" rel="stylesheet">
+    <link id="layout" href="../tmb/tmb-base.css" rel="stylesheet">
+    <link id="layout-2" href="tm(lc(mb)r)-base.css" rel="stylesheet">
+    <link id="layout-vars" href="tm(lc(mb)r)-2.css" rel="stylesheet">
+</head>
+<body>
+<div id="draggable" class="ui-widget-content">
+    <div>可拖拽：</div>
+    <div>
+        <label>布局：
+            <select data-widget="link"
+                    data-options="[{'id':'layout','href':'../tmb/tmb-base.css'},{'id':'layout-2','href':'tm(lc(mb)r)-base.css'}]">
+                <option value="">请选择</option>
+                <option value="flex">弹性布局</option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>变体：
+            <select data-widget="link" data-options="[{'id':'layout-vars'}]">
+                <option value="">请选择</option>
+                <option value="tm(lc(mb)r)-1.css">独立滚动</option>
+                <option value="tm(lc(mb)r)-2.css">滚动条提升</option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>着色：
+            <input type="checkbox" data-widget="link"
+                   data-options="[{'id':'color','href':'../tmb/tmb-color.css'},{'id':'color-2','href':'tm(lc(mb)r)-color.css'}]">
+        </label>
+    </div>
+    <div>
+        <label>尺寸：
+            <input type="checkbox" data-widget="link"
+                   data-options="[{'id':'size','href':'../tmb/tmb-size.css'},{'id':'size-2','href':'tm(lc(mb)r)-size.css'}]">
+        </label>
+    </div>
+</div>
+
+<div class="container">
+    <header>header</header>
+    <main>
+        <nav>
+            <button onclick="switchContent(this)">填充内容 nav</button>
+        </nav>
+        <article>
+            <section>
+                <button onclick="switchContent(this)">填充内容 section</button>
+            </section>
+            <footer>
+                <div style="height: 80px">footer</div>
+            </footer>
+        </article>
+        <aside>
+            <button onclick="switchContent(this)">填充内容 aside</button>
+        </aside>
+    </main>
+</div>
+</body>
+</html>

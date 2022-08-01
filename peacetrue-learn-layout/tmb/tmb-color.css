@@ -1,0 +1,16 @@
+/*背景颜色，为了方便识别不同区域*/
+.container {
+    background-color: green;
+}
+
+header {
+    background-color: blue;
+}
+
+main {
+    background-color: aqua;
+}
+
+footer {
+    background-color: yellow;
+}

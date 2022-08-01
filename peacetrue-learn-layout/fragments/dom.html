@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试 DOM 接口</title>
+</head>
+<body>
+<script>
+    document.body.append('<div>div</div>');
+    document.body.appendChild(document.createElement('div')).outerHTML = '<div>div</div>';
+    document.body.appendChild(document.createElement('div')).outerHTML = '<span>div to span</span>';
+
+    let element = document.createElement('b');
+    document.body.appendChild(element);
+    element.outerHTML = '<br/><b>after appendChild</b>';
+
+    try {
+        element = document.createElement('b');
+        // Uncaught DOMException: Failed to set the 'outerHTML' property on 'Element': This element has no parent node.
+        element.outerHTML = '<b>before appendChild</b>';
+        document.body.appendChild(element);
+    } catch (e) {
+        console.error(`error: \n`, e)
+    }
+</script>
+</body>
+</html>

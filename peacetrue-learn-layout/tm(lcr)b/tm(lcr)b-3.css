@@ -1,0 +1,12 @@
+/*全屏滚动*/
+
+header {
+    z-index: 1;
+}
+
+nav, aside {
+    height: calc(100vh - 80px);
+    overflow: auto;
+    position: sticky;
+    top: 80px;
+}
