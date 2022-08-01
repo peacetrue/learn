@@ -4,7 +4,7 @@
 
 * https://reactjs.org/
 
-== peacetrue-learn-react
+== 创建模块
 
 [source%nowrap,bash]
 ----
