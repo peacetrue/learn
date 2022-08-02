@@ -10,3 +10,28 @@
 ----
 mkdir peacetrue-learn-react && cd peacetrue-learn-react
 ----
+
+== 浏览器模式
+
+基于 HTML 页面使用 React。
+
+////
+[source%nowrap,bash,subs="attributes"]
+----
+pwd
+# peacetrue-learn
+mkdir -p docs/antora/modules/ROOT/examples/peacetrue-learn-react
+cd docs/antora/modules/ROOT/examples/peacetrue-learn-react
+ln -s {examples-ln}/peacetrue-learn-react/browser.html browser.html
+----
+////
+
+
+创建 *browser.html* 文件，内容如下：
+
+.browser.html
+[source%nowrap,html]
+----
+include::example$peacetrue-learn-react/browser.html[]
+----
+

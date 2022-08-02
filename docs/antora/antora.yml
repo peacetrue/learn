@@ -6,6 +6,7 @@ asciidoc:
     placeholder: ''
     numbered: '@'
     app-name: peacetrue-learn
+    examples-ln: ../../../../../..
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
