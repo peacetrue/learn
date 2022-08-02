@@ -1,1 +1,1 @@
-test.txt
+../../../../../peacetrue-learn-test/ln/test.txt
