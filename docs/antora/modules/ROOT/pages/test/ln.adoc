@@ -1,0 +1,39 @@
+= ln
+
+测试软链接在提交后是否仍然有效，存在 3 种可能性：
+
+. 软链接文件（同硬链接），以一个独立的文件提交到仓库中，检出后也是一个独立的文件
+. 软链接文件，以引用方式提交到仓库中，检出后存在 2 种情况
+.. 以绝对路径关联，不存在的关联文件
+.. 以相对路径关联，存在的关联文件
+
+
+== 创建模块
+
+[source%nowrap,bash]
+----
+mkdir -p peacetrue-learn-test/ln && cd peacetrue-learn-test/ln
+----
+
+== 创建测试文件
+
+[source%nowrap,bash]
+----
+echo 'test' > test.txt
+ln -s "$(pwd)/test.txt" "$(pwd)/../../docs/antora/modules/ROOT/examples/test.txt"
+ln -s test.txt ../../docs/antora/modules/ROOT/examples/test-relative.txt
+
+ls -l
+#total 0
+#lrwxr-xr-x  1 xiayx  staff     8B Aug  2 12:36 test-relative.txt -> test.txt
+#lrwxr-xr-x  1 xiayx  staff    84B Aug  2 12:35 test.txt -> /Users/xiayx/Documents/Projects/peacetrue-learn-git/peacetrue-learn-test/ln/test.txt
+git commit -m "测试软链接在提交后是否仍然有效"
+git push origin test/ln
+----
+
+== 检出模块
+
+[source%nowrap,bash]
+----
+git clone -b test/ln https://github.com/peacetrue/peacetrue-learn.git peacetrue-learn-test-ln
+----
