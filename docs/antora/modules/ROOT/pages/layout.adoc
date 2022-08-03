@@ -2,6 +2,8 @@
 
 本文记录实现网页整体布局的几种方案，希望日后在类似需求上能驾轻就熟。
 
+//@formatter:off
+
 == 语义元素
 
 在布局过程中，会使用到如下 https://www.w3schools.com/html/html5_semantic_elements.asp[语义元素^]：
@@ -14,16 +16,18 @@
 * aside
 * section
 
+示例中，语义元素可能使用不准确，实际使用过程中，可自行替换。
+
 == 方位分布
 
 方位按照九宫格划分：
 
-* Vertical Direction（垂直方向）
+* Vertical Direction(垂直方向)
 . top(t)：上
 . middle(m)：中
 . bottom(b)：下
 
-* Horizontal Direction（水平方向）
+* Horizontal Direction(水平方向)
 . left(l)：左
 . center(c)：中
 . right(r)：右
@@ -38,37 +42,48 @@ image::peacetrue-learn-layout/image-2022-07-25-06-05-19-469.png[width=50%]
 
 === 流动布局
 
+参考 https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+
 === 网格布局
+
+待办。
 
 == 布局实现
 
-下表记录了 3 种布局方式，名称使用方位的缩写表示（即上述括号中的字母）。
+下表记录了 3 种布局方式，名称使用方位的缩写表示(即上述括号中的字母)。
 
 |===
-|名称 |描述 |使用场景 |特点 |效果
+|名称 |描述 |使用场景 |演示效果
 
 |tmb
 |上中下 布局
 |主页
-|header 位置固定，main 高度自适应，全屏滚动
 |
 
 |tm(lcr)b
-|上中（左中右）下 布局
+|上中(左中右)下 布局
 |功能页
-|header 位置固定，footer 在底部，拥有 3 种变体
 |
 
 |tm(lc(mb)r)
 |上中(左中(中下)右) 布局
 |功能页
-|header 位置固定，footer 在中间底部，拥有 2 种变体
 |
 |===
 
-每块区域使用不同的背景色以示区别。
+=== 上中下布局
 
-=== 上中下
+容器元素中包含列方向排列的 3 个子元素：header、main、footer。
 
+//header 位置固定，main 高度自适应，footer 在底部，全屏滚动。
 
+=== 上中(左中右)下布局
 
+容器元素中包含列方向排列的 3 个子元素：header、main、footer。
+main 元素中包含行方向排列的 3 个子元素：nav、article、aside。
+
+=== 上中(左中(中下)右)布局
+
+容器元素中包含列方向排列的 2 个子元素：header、main。
+main 元素中包含行方向排列的 3 个子元素：nav、article、aside。
+article 元素中包含列方向排列的 2 个子元素：section、footer。

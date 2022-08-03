@@ -1,0 +1,20 @@
+.container {
+    /*最小高度是整个窗口*/
+    min-height: 100vh;
+    /*容器内元素列方向排序*/
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    /*粘性的，滚动时 header 不动*/
+    position: sticky;
+    top: 0;
+}
+
+main {
+    /*列方向，此元素占据容器内剩余高度*/
+    flex-grow: 1;
+}
+
+

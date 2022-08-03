@@ -4,9 +4,9 @@ document.body.insertAdjacentHTML('beforeend',
         <div>可拖拽：</div>
         <div>
             <label>布局：
-                <select data-widget="link" data-options="[{'id':'layout','href':'tmb-base.css'}]">
+                <select data-widget="link" data-options="[{'id':'layout','href':'tmb-flex.css'}]">
                     <option value="">请选择</option>
-                    <option value="tmb-base.css">弹性布局</option>
+                    <option value="tmb-flex.css">弹性布局</option>
                 </select>
             </label>
         </div>
@@ -21,10 +21,10 @@ document.body.insertAdjacentHTML('beforeend',
             </label>
         </div>
     </div>
-    <link rel="stylesheet" href="../libs/jquery-ui.css"/>
-    <link rel="stylesheet" href="../libs/draggable.css"/>
-<!--    <script src="../libs/jquery-3.6.0.js"></script>-->
-<!--    <script src="../libs/jquery-ui.js"></script>-->
-<!--    <script src="../libs/common.js"></script>-->
+    <link rel="stylesheet" href="../common/jquery-ui.css"/>
+    <link rel="stylesheet" href="../common/draggable.css"/>
+<!--    <script src="../common/jquery-3.6.0.js"></script>-->
+<!--    <script src="../common/jquery-ui.js"></script>-->
+<!--    <script src="../common/common.js"></script>-->
 `
 );
