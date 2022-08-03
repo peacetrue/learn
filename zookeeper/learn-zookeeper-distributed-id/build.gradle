@@ -1,0 +1,11 @@
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-zookeeper-config') {
+        exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+    }
+    implementation('org.apache.zookeeper:zookeeper:3.6.2') {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}

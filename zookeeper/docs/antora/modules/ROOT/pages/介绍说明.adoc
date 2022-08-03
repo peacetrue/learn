@@ -1,0 +1,153 @@
+= 简介
+
+分布式协调服务。
+
+.参考链接
+* https://zookeeper.apache.org/
+* https://zookeeper.apache.org/doc/current/index.html
+
+.特性
+. 简单：单一职责，只存储少量需要共享的重要核心数据
+. 强一致性：集群部署，实时主从复制
+. 高可靠：主节点故障，自我修复，快速选出新任主节点
+. 高性能：内存存储，QPS ？ TPS ？
+
+.集群类型
+. 节点类型
+.. 主从复制
+.. 无主集群
+. 数据量
+.. 冗余集群
+.. 分片集群
+
+&nbsp;
+
+== 选举模型
+
+谦让机制， myid 最大的成为主，但过半机制导致不一定是最大的成为主， 例如：1、2、3、4，依次启动，启动到 3 时，3 就拥有 3 票过半直接成为主，虽然 3 小于 4。
+
+== 生命周期
+
+== 配置
+
+[source,zookeeper]
+----
+# 主从节点间心跳时间
+tickTime=2000
+# 初始延迟，？
+initLimit=10
+# 同步数据并获得应答的限制，10 秒内给出答复，不然认为你有问题
+syncLimit=5
+# 数据持久化存储地址
+dataDir=/root/download/apache-zookeeper-3.6.2-bin/data
+# 客户端连接进来
+clientPort=2181
+# the maximum number of client connections.
+# increase this if you need to handle more clients
+#maxClientCnxns=60
+#
+# Be sure to read the maintenance section of the
+# administrator guide before turning on autopurge.
+#
+# http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance
+#
+# The number of snapshots to retain in dataDir
+#autopurge.snapRetainCount=3
+# Purge task interval in hours
+# Set to "0" to disable auto purge feature
+#autopurge.purgeInterval=1
+
+## Metrics Providers
+#
+# https://prometheus.io Metrics Exporter
+#metricsProvider.className=org.apache.zookeeper.metrics.prometheus.PrometheusMetricsProvider
+#metricsProvider.httpPort=7000
+#metricsProvider.exportJvmInfo=true
+
+# 3888 初始化无主时选主端口，2888 有主后通讯端口
+server.1=node01:2888:3888
+server.1=node01:2888:3888
+server.1=node01:2888:3888
+server.1=node01:2888:3888
+----
+
+== 问题
+
+=== 客户端连接到从节点，如何写入数据
+
+从节点会发送写入操作到主节点，最终通过主节点写入
+
+=== zookeeper 集群的状态
+
+* 可用状态：主节点正常
+* 不可以状态：主节点故障，整体集群不可以，进入选主场景
+
+=== 性能
+
+* 910 个客户端
+
+=== 数据结构
+
+-----
+# Zxid：事物标志，64 位，前 32 位为纪元标志（重新选主后改变），后 32 位为局部事物标志（每次修改后改变）
+
+$ create /zk_test my_data
+$ get -s /zk_test
+my_data
+cZxid = 0x800000018
+ctime = Sat Sep 19 02:31:37 EDT 2020
+mZxid = 0x800000018
+mtime = Sat Sep 19 02:31:37 EDT 2020
+pZxid = 0x800000018
+cversion = 0
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 7
+numChildren = 0
+
+$ set /zk_test my_changed_data
+$ get -s /zk_test
+my_changed_data
+cZxid = 0x800000018
+ctime = Sat Sep 19 02:31:37 EDT 2020
+mZxid = 0x80000001c
+mtime = Sat Sep 19 02:39:17 EDT 2020
+pZxid = 0x800000018
+cversion = 0
+dataVersion = 1
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 15
+numChildren = 0
+
+$ create /zk_test/child child
+$ get -s /zk_test
+get -s /zk_test
+my_changed_data
+cZxid = 0x800000018
+ctime = Sat Sep 19 02:31:37 EDT 2020
+mZxid = 0x80000001c
+mtime = Sat Sep 19 02:39:17 EDT 2020
+pZxid = 0x80000001d
+cversion = 1
+dataVersion = 1
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 15
+numChildren = 1
+
+$ get -s /zk_test/child
+child
+cZxid = 0x80000001d
+ctime = Sat Sep 19 02:42:18 EDT 2020
+mZxid = 0x80000001d
+mtime = Sat Sep 19 02:42:18 EDT 2020
+pZxid = 0x80000001d
+cversion = 0
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x0
+dataLength = 5
+numChildren = 0
+-----

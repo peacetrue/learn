@@ -1,0 +1,36 @@
+= 简介
+
+== 服务注册与发现
+
+.参考
+* https://zookeeper.apache.org/doc/r3.3.5/javaExample.html
+* https://curator.apache.org/
+* https://curator.apache.org/curator-x-discovery/
+* https://docs.spring.io/spring-cloud-zookeeper/docs/2.2.3.RELEASE/reference/html/#activating
+* org.apache.zookeeper:zookeeper
+* org.apache.curator:curator-client
+
+.项目模块
+* zookeeper 注册中心 ZookeeperProperties
+* learn-zookeeper-resource-server：资源服务端
+* learn-zookeeper-resource-client：资源客户端
+
+.zookeeper 数据模型
+[source]
+----
+base path
+       |_______ service A name
+                    |__________ instance 1 id --> (serialized ServiceInstance)
+                    |__________ instance 2 id --> (serialized ServiceInstance)
+                    |__________ ...
+       |_______ service B name
+                    |__________ instance 1 id --> (serialized ServiceInstance)
+                    |__________ instance 2 id --> (serialized ServiceInstance)
+                    |__________ ...
+       |_______ ...
+----
+
+服务端启动多台，客户端通过应用名称访问服务端，应用名称自动转换成 IP 地址。http://localhost:7001
+
+== 分布式 ID
+

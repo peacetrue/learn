@@ -1,0 +1,165 @@
+= 普罗米修斯
+
+监控程序。
+
+.参考链接
+* https://github.com/prometheus/prometheus
+* https://prometheus.io
+* https://www.bilibili.com/video/BV16J411z7SQ?from=search&seid=271296245226758400[B 站视频教程]
+
+== 架构
+
+image::普罗米修斯架构.png[]
+
+== 下载
+
+* https://prometheus.io/download/
+* mkdir download && cd download
+* yum install -y wget
+* wget https://mirrors.tuna.tsinghua.edu.cn/github-release/prometheus/prometheus/LatestRelease/prometheus-2.21.0.linux-386.tar.gz
+
+== 安装
+
+* https://prometheus.io/docs/prometheus/latest/installation/
+
+二进制版本，不需要安装
+
+== 配置
+
+* https://prometheus.io/docs/prometheus/latest/getting_started/#configuring-prometheus-to-monitor-itself
+
+== 启动
+
+[source,shell]
+----
+$ ./prometheus
+level=info ts=2020-09-19T10:17:39.239Z caller=main.go:673 msg="Server is ready to receive web requests."
+
+$ lsof -i:9090
+COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+prometheu 1972 root    3u  IPv4  26789      0t0  TCP localhost:41932->localhost:websm (ESTABLISHED)
+prometheu 1972 root    9u  IPv6  26783      0t0  TCP *:websm (LISTEN)
+prometheu 1972 root   10u  IPv6  26790      0t0  TCP localhost:websm->localhost:41932 (ESTABLISHED)
+prometheu 1972 root   12u  IPv6  26794      0t0  TCP localhost:57398->localhost:websm (ESTABLISHED)
+prometheu 1972 root   13u  IPv6  26795      0t0  TCP localhost:websm->localhost:57398 (ESTABLISHED)
+----
+
+== 服务
+
+[source,bash]
+----
+$ useradd -m -s /bin/bash prometheus
+
+$ cd /etc/systemd/system/
+$ vi /etc/systemd/system/prometheus.service
+
+
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+User=prometheus
+Restart=on-failure
+
+#Change this line if you download the
+#Prometheus on different path user
+ExecStart=/root/download/prometheus-2.21.0.linux-386/prometheus \
+  --config.file=/root/download/prometheus-2.21.0.linux-386/prometheus.yml \
+  --storage.tsdb.path=/root/download/prometheus-2.21.0.linux-386/data
+
+[Install]
+WantedBy=multi-user.target
+----
+
+* 重新加载配置信息：systemctl daemon-reload
+* 启动prometheus：systemctl start prometheus.service
+* 启动prometheus：systemctl restart prometheus.service
+* 关掉prometheus：systemctl stop prometheus.service
+* 查看进程状态及日志：systemctl status prometheus.service
+* 开机自启动：systemctl enable prometheus.service
+* 关闭自启动：systemctl disable prometheus.service
+
+
+== 自带界面
+
+* http://10.0.0.51:9090
+* http://10.0.0.51:9090/metrics
+
+
+== 监控 Linux 主机
+
+* wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+* tar -xf node_exporter-1.0.1.linux-amd64.tar.gz
+* cd node_exporter-1.0.1.linux-amd64
+* nohub ./node_exporter &
+* ./node_exporter &
+* lsof -i:9100
+* http://10.0.0.51:9100/metrics
+
+== 监控 mysql
+
+.mysql
+* wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+* md5sum mysql80-community-release-el7-3.noarch.rpm
+* rpm -ivh mysql80-community-release-el7-3.noarch.rpm
+* yum install mysql-server -y
+* systemctl start mysqld
+* systemctl enable mysqld
+* systemctl status mysqld
+* grep 'temporary password' /var/log/mysqld.log
+* A temporary password is generated for root@localhost: eh=9SwdrYIUl
+* mysql_secure_installation
+* wangxiaoyu0O*
+* mysqladmin -u root -p version
+* mysql -u root -p wangxiaoyu0O*
+* use mysql;
+* select user,host from user;
+* update user set host = '%' where user='root';
+* systemctl restart mysqld
+
+
+.mysqld_exporter
+* wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz
+* vi ~/.my.cnf
+
+----
+[client]
+user=root
+password=wangxiaoyu0O*
+----
+
+* ./mysqld_exporter &
+* http://10.0.0.51:9104/metrics
+
+== zookeeper
+
+* '10.0.0.41:7000','10.0.0.42:7000','10.0.0.43:7000'
+
+== grafana
+
+* wget  https://mirrors.tuna.tsinghua.edu.cn/grafana/yum/rpm/grafana-7.1.5-1.x86_64.rpm
+* yum install grafana-7.1.5-1.x86_64.rpm
+* systemctl start grafana-server
+* systemctl status grafana-server
+* systemctl restart grafana-server
+* http://10.0.0.54:3000
+* admin/admin
+* admin/123456
+* vi /etc/grafana/grafana.ini
+
+----
+[dashboards.json]
+enabled = true
+path = /var/lib/grafana/dashboards
+----
+
+* mkdir -p /var/lib/grafana/dashboards
+
+这里已经直接保存了图表 JSON，还是需要通过界面导。
+
+
+
+
+

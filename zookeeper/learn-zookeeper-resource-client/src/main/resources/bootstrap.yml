@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: resource-client
+  cloud:
+    zookeeper:
+      connect-string: 10.0.0.41:2181,10.0.0.42:2181,10.0.0.43:2181
+    discovery:
+      enabled: true
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    jmx:
+      exposure:
+        include: '*'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+server:
+  port: 7001

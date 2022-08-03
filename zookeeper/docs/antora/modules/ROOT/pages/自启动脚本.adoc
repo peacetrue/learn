@@ -1,0 +1,36 @@
+= 自启动脚本
+
+Centos7
+
+* https://www.cnblogs.com/javaite/p/8710298.html
+
+[source%nowap]
+----
+$ vi /etc/systemd/system/zookeeper.service
+$ rm -rf /etc/systemd/system/zookeeper
+$ vi /etc/systemd/system/zookeeper
+
+[Unit]
+Description=ZooKeeper Service
+After=network.target
+After=syslog.target
+
+[Service]
+Environment=ZOO_LOG_DIR=/root/download/apache-zookeeper-3.6.2-bin/logs
+SyslogIdentifier=zookeeper
+
+Type=forking
+ExecStart=/root/download/apache-zookeeper-3.6.2-bin/bin/zkServer.sh start /root/download/apache-zookeeper-3.6.2-bin/conf/zoo.cfg
+ExecStop=/root/download/apache-zookeeper-3.6.2-bin/bin/zkServer.sh stop /root/download/apache-zookeeper-3.6.2-bin/conf/zoo.cfg
+ExecReload=/root/download/apache-zookeeper-3.6.2-bin/bin/zkServer.sh restart /root/download/apache-zookeeper-3.6.2-bin/conf/zoo.cfg
+
+[Install]
+WantedBy=default.target
+----
+
+* 重新加载配置信息：systemctl daemon-reload
+* 启动zookeeper：systemctl start zookeeper.service
+* 关掉zookeeper：systemctl stop zookeeper.service
+* 查看进程状态及日志：systemctl status zookeeper.service
+* 开机自启动：systemctl enable zookeeper.service
+* 关闭自启动：systemctl disable zookeeper.service

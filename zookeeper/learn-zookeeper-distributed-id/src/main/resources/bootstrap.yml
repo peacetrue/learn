@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: distributed-id
+  cloud:
+    zookeeper:
+#      connect-string: 10.0.0.41:2181,10.0.0.42:2181,10.0.0.43:2181
+      connect-string: 10.0.0.43:2181
+      max-retries: 10
+      max-sleep-ms: 500
+    discovery:
+      enabled: false
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    jmx:
+      exposure:
+        include: '*'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+

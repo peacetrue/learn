@@ -1,0 +1,134 @@
+= 安装集群
+
+本文简单介绍在 Centos7 上安装 zookeeper 集群。
+
+== 主机规划
+
+虚拟机环境。
+
+[source]
+|===
+|主机名 |IP 地址 |CPU |内存 |磁盘
+
+|zk-node01
+|10.0.0.41
+|1 核
+|1 G
+|20 G
+
+|zk-node02
+|10.0.0.42
+|1 核
+|1 G
+|20 G
+
+|zk-node03
+|10.0.0.43
+|1 核
+|1 G
+|20 G
+|===
+
+== 安装
+
+. yum install -y wget
+. cd ~ && mkdir download && cd download
+. wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.6.2/apache-zookeeper-3.6.2-bin.tar.gz
+. cd apache-zookeeper-3.6.2-bin
+
+== 配置
+
+. mkdir data && mkdir logs
+. cd data
+. echo 1 > myid
+. cd ~/config
+. cp zoo_sample.cfg zoo.cfg
+. vi zoo.cfg
+
+.zoo.cfg
+[source]
+----
+#数据目录
+dataDir=/root/download/apache-zookeeper-3.6.2-bin/data
+#日志目录
+dataLogDir=/root/download/apache-zookeeper-3.6.2-bin/logs
+
+# 3888 初始启动无主节点时，选主用的端口
+# 2888 选主完成后通讯时使用的端口
+server.1=10.0.0.41:2888:3888
+server.2=10.0.0.42:2888:3888
+server.3=10.0.0.43:2888:3888
+----
+
+. bin/zkServer.sh start
+. bin/zkServer.sh start-foreground：前台启动
+. bin/zkServer.sh status
+. bin/zkServer.sh stop
+
+尚未选出主节点时，使用查看状态命令会报错，此时只有 3888 端口启动；选主完成后，启动 2888 端口启动：
+
+.查看程序启动的端口
+[source,shell]
+----
+$ netstat -nultp|grep java
+tcp6       0      0 :::2181                 :::*                    LISTEN      2328/java
+tcp6       0      0 10.0.0.43:2888          :::*                    LISTEN      2328/java
+tcp6       0      0 :::36366                :::*                    LISTEN      2328/java
+tcp6       0      0 10.0.0.43:3888          :::*                    LISTEN      2328/java
+tcp6       0      0 :::8080                 :::*                    LISTEN      2328/java
+
+$ netstat -natp| egrep '(2888|3888)'
+----
+
+.查看端口上的连接
+[source,shell]
+----
+$ lsof -i:2888
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    2328 root   59u  IPv6  27969      0t0  TCP zk-node03:spcsdlobby (LISTEN)
+java    2328 root   60u  IPv6  27970      0t0  TCP zk-node03:spcsdlobby->10.0.0.42:35084 (ESTABLISHED)
+java    2328 root   62u  IPv6  27975      0t0  TCP zk-node03:spcsdlobby->10.0.0.41:44758 (ESTABLISHED)
+----
+
+如果有很多连接，如何统计连接总数？
+
+== 初始启动选主过程
+
+没有历史数据，第一次启动集群。谁的 id 大，选谁！
+
+.启动 node03
+[source,shell]
+----
+$ bin/zkServer.sh start-foreground
+2020-09-19 01:46:03,169 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-1:QuorumCnxManager@400] - Cannot open channel to 1 at election address /10.0.0.41:3888
+2020-09-19 01:46:03,175 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-2:QuorumCnxManager@400] - Cannot open channel to 2 at election address /10.0.0.42:3888
+
+2020-09-19 01:46:03,374 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-2:QuorumCnxManager@400] - Cannot open channel to 2 at election address /10.0.0.42:3888
+2020-09-19 01:46:03,376 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-3:QuorumCnxManager@400] - Cannot open channel to 1 at election address /10.0.0.41:3888
+
+2020-09-19 01:46:03,780 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-2:QuorumCnxManager@400] - Cannot open channel to 2 at election address /10.0.0.42:3888
+2020-09-19 01:46:03,783 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-3:QuorumCnxManager@400] - Cannot open channel to 1 at election address /10.0.0.41:3888
+
+2020-09-19 01:46:04,577 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-2:QuorumCnxManager@400] - Cannot open channel to 2 at election address /10.0.0.42:3888
+2020-09-19 01:46:04,579 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-3:QuorumCnxManager@400] - Cannot open channel to 1 at election address /10.0.0.41:3888
+----
+
+最开始连不上其他节点，报错。
+
+.启动 node02
+[source,shell]
+----
+$ bin/zkServer.sh start-foreground
+
+# node03 收到请求，仍然连不上 node01
+2020-09-19 01:56:32,427 [myid:3] - INFO  [ListenerHandler-/10.0.0.43:3888:QuorumCnxManager$Listener$ListenerHandler@1070] - Received connection request from /10.0.0.42:46152
+2020-09-19 01:56:32,453 [myid:3] - WARN  [QuorumConnectionThread-[myid=3]-21:QuorumCnxManager@400] - Cannot open channel to 1 at election address /10.0.0.41:3888
+
+# node02 启动的时候，会去连一下 node01，发现连不上。然后 node03 和 node02 组成集群（3 个里面 2 个可用），然后不再请求 node01 了
+----
+
+== 再次启动选主过程
+
+考虑数据完整性
+
+
