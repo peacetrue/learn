@@ -1,0 +1,3 @@
+println "settings.gradle: started"
+rootProject.name = "learn-gradle"
+println "settings.gradle: finished"

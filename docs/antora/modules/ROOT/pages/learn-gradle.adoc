@@ -1,0 +1,82 @@
+= 学习 Gradle
+
+// @formatter:off
+
+== 生命周期
+
+参考 https://docs.gradle.org/current/userguide/build_lifecycle.html[Build Lifecycle^]。
+
+Gradle 构建具有三个不同的阶段：
+
+初始化::
+Gradle 支持单项目和多项目构建。在初始化阶段，Gradle 确定哪些项目将参与构建，并为每个项目创建一个 Project 实例。
+
+配置::
+在此阶段配置项目对象。执行作为构建一部分的所有项目的构建脚本。
+
+执行::
+Gradle 确定在配置阶段创建和配置的要执行的任务子集。
+该子集由传递给 gradle 命令和当前目录的任务名称参数确定。
+Gradle 然后执行每个选定的任务。
+
+以上是理论知识，以下实际操作。
+
+生命周期涉及 3 个脚本文件，内容如下：
+
+.init.gradle
+[source%nowrap,bash]
+----
+include::example$learn-gradle/init.gradle[]
+----
+
+.settings.gradle
+[source%nowrap,bash]
+----
+include::example$learn-gradle/settings.gradle[]
+----
+
+.build.gradle
+[source%nowrap,bash]
+----
+include::example$learn-gradle/build.gradle[]
+----
+
+init.gradle 需要放置在 `$HOME/.gradle/init.d` 目录下：
+
+[source%nowrap,bash]
+----
+$ pwd
+learn/learn-gradle
+
+$ ln -s "$(pwd)/init.gradle" "$HOME/.gradle/init.d/learn.gradle"
+----
+
+执行 clean 任务，观察执行日志：
+
+[source%nowrap,bash]
+----
+$ ./gradlew clean
+init.gradle: started
+init.gradle: finished
+init.gradle -> beforeSettings: settings 'learn-gradle'
+settings.gradle: started
+settings.gradle: finished
+init.gradle -> settingsEvaluated: settings 'learn-gradle'
+init.gradle -> allprojects: root project 'learn-gradle'
+init.gradle -> projectsLoaded: build 'learn-gradle'
+
+> Configure project :
+init.gradle -> beforeProject: root project 'learn-gradle'
+build.gradle: started
+build.gradle: finished
+init.gradle -> afterProject: root project 'learn-gradle'
+init.gradle -> projectsEvaluated: build 'learn-gradle'
+
+BUILD SUCCESSFUL in 478ms
+1 actionable task: 1 executed
+----
+
+总结如下：
+
+image::learn-gradle/build-lifecycle.png[]
+

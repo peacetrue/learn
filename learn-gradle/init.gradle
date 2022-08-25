@@ -1,0 +1,31 @@
+println "init.gradle: started"
+
+gradle.beforeSettings({
+    println "init.gradle -> beforeSettings: $it"
+})
+
+gradle.settingsEvaluated({
+    println "init.gradle -> settingsEvaluated: $it"
+})
+
+gradle.beforeProject({
+    println "init.gradle -> beforeProject: $it"
+})
+
+gradle.afterProject({
+    println "init.gradle -> afterProject: $it"
+})
+
+gradle.projectsLoaded({
+    println "init.gradle -> projectsLoaded: $it"
+})
+
+gradle.projectsEvaluated({
+    println "init.gradle -> projectsEvaluated: $it"
+})
+
+gradle.allprojects({
+    println "init.gradle -> allprojects: $it"
+})
+
+println "init.gradle: finished"

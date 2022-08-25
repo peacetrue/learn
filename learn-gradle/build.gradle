@@ -1,0 +1,10 @@
+plugins {
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
+}
+println "build.gradle: started"
+
+group "com.github.peacetrue.learn"
+version "${peaceGradleVersion}${tailSnapshot}"
+description "学习 Gradle"
+
+println "build.gradle: finished"
