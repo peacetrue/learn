@@ -1,0 +1,13 @@
+= Java IO
+
+Java 输入输出。
+
+== 文件
+
+[plantuml,target=structure,format=png]
+----
+@startuml
+[后端主应用] <--> [后端监控应用]: 相互通信
+[后端主应用] <--  [前端应用]:    单向通信
+@enduml
+----
