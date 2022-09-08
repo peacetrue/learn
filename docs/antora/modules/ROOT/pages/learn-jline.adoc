@@ -1,0 +1,21 @@
+= Java 命令行
+
+== 参考
+
+* https://github.com/jline/jline3[官网^]
+* https://nettee.github.io/posts/2018/Getting-Started-with-JLine/[Java 命令行交互输入库 JLine 入门]
+
+
+== 示例
+
+[source%nowrap,bash]
+----
+include::example$learn-jline/src/main/java/com/github/peacetrue/learn/jline/Main.java[tag=basic]
+----
+
+[source%nowrap,bash]
+----
+$ gradle installDist
+$ build/install/learn-jline/bin/learn-jline
+----
+
