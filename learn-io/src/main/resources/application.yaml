@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: learn-io
+  main:
+    banner-mode: off
+
+logging:
+  level:
+    root: warn
+  #    2022-09-08 18:34:08.633  WARN 58898 --- [           main] org.jline                                : The Parser of class org.springframework.shell.jline.ExtendedDefaultParser does not support the CompletingParsedLine interface. Completion with escaped or quoted words won't work correctly.
+    "org.jline": off
+    "com.github.peacetrue": debug
+    "com.github.peacetrue.learn.io.IOMain": warn
+
+

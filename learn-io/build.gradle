@@ -1,7 +1,17 @@
 plugins {
     id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
+    id "application"
 }
 
 group "com.github.peacetrue.learn"
 version "${learnIoVersion}${tailSnapshot}"
 description "Java IO"
+
+application {
+    mainClassName = "com.github.peacetrue.learn.io.IOMain"
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.shell:spring-shell-starter:2.1.1"
+}
