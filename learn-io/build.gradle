@@ -1,6 +1,12 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+import org.apache.tools.ant.taskdefs.condition.Os
+
+
 plugins {
-    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
     id "application"
+    id "org.springframework.boot" version "${springBootPluginVersion}"
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}"
 }
 
 group "com.github.peacetrue.learn"
@@ -8,10 +14,16 @@ version "${learnIoVersion}${tailSnapshot}"
 description "Java IO"
 
 application {
-    mainClassName = "com.github.peacetrue.learn.io.IOMain"
+//    mainClassName = "com.github.peacetrue.learn.io.IOMain"
+    applicationDefaultJvmArgs = ["-Xms50M", "-Xmx50M"]
 }
 
 dependencies {
+    implementation platform(SpringBootPlugin.BOM_COORDINATES) //版本管理
+
     implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
     implementation "org.springframework.shell:spring-shell-starter:2.1.1"
+    testImplementation "org.apache.commons:commons-io"
+    testImplementation "com.github.peacetrue:peacetrue-common"
 }

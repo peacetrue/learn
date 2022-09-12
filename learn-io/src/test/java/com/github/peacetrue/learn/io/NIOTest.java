@@ -2,6 +2,7 @@ package com.github.peacetrue.learn.io;
 
 import com.github.peacetrue.test.SourcePathUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class NIOTest {
 
         InputStream inputStream = Files.newInputStream(filePath);
         log.info("inputStream: {}", inputStream);
-        Assertions.assertEquals(string, new String(inputStream.readAllBytes(), StandardCharsets.UTF_8));
+        Assertions.assertEquals(string, IOUtils.toString(inputStream));
         inputStream.close();
     }
 
