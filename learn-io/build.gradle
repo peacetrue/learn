@@ -24,6 +24,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework.boot:spring-boot-starter-aop"
     implementation "org.springframework.shell:spring-shell-starter:2.1.1"
-    testImplementation "org.apache.commons:commons-io"
-    testImplementation "com.github.peacetrue:peacetrue-common"
+    implementation "org.apache.commons:commons-io"
+    implementation "com.github.peacetrue:peacetrue-common"
+    implementation "org.jooq:jool-java-8"
 }

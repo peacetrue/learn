@@ -1,15 +1,41 @@
 = Java IO
 
-Java 输入输出。
+本文通过案例演示 Java 输入输出。
+
+== 运行环境
+
+通过命令行提供演示环境。
+
+.检出代码
+[source%nowrap,bash]
+----
+$ git clone -b io https://github.com/peacetrue/learn.git
+$ cd learn/learn-io
+----
+
+== Direct VS Buffer
+
+通过输出流写出内容，对比直接写出和缓冲写出的效果。
+
+A 线程直接写出内容，B 线程通过缓冲区写出内容，
+2 个线程都写完后，程序退出。
+打印 A、B 线程的运行时间和系统调用的耗时。
+
+写出文件内容：
+
+[source%nowrap,bash]
+----
+include::example$learn-io/src/main/java/com/github/peacetrue/learn/io/IOCommands.java[tag=write]
+----
+
+[source%nowrap,bash]
+----
+include::example$learn-io/src/main/java/com/github/peacetrue/learn/io/IOCommands.java[]
+----
+
 
 == 文件
 
-[plantuml,target=structure,format=png]
-----
-@startuml
-[后端主应用] <--> [后端监控应用]: 相互通信
-[后端主应用] <--  [前端应用]:    单向通信
-@enduml
-----
+
 
 

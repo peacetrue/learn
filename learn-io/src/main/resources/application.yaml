@@ -11,5 +11,6 @@ logging:
     "org.jline": off
     "com.github.peacetrue": debug
     "com.github.peacetrue.learn.io.IOMain": warn
-
+#  pattern:
+#    console: "%m\n"
 

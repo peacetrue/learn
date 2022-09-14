@@ -4,4 +4,4 @@
 ./gradlew clean installBootDist
 
 # 运行并追踪系统调用
-strace build/install/learn-io-boot/bin/learn-io
+strace -c -o learn-io-strace.txt build/install/learn-io-boot/bin/learn-io
