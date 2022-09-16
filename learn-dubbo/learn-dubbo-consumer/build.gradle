@@ -1,0 +1,31 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id "application"
+    id "org.springframework.boot" version "${springBootPluginVersion}"
+}
+
+configurations {
+    // https://cloud.tencent.com/developer/article/1746922
+    all*.exclude module: "log4j"
+}
+
+
+dependencies {
+    implementation platform(SpringBootPlugin.BOM_COORDINATES) //版本管理
+    implementation project(":learn-dubbo-interface")
+    implementation platform("org.apache.dubbo:dubbo-bom:${dubbo.version}")
+    implementation "org.apache.dubbo:dubbo"
+    implementation "org.apache.dubbo:dubbo-spring-boot-starter"
+    implementation "org.apache.dubbo:dubbo-dependencies-zookeeper"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "com.caucho:hessian:4.0.66"
+}
+
+application {
+    applicationDefaultJvmArgs = ["-Xms50M", "-Xmx50M", "-Dspring.profiles.active=prod"]
+}

@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+
+#echo "127.0.0.1 $LEARN_DUBBO_DOMAIN" >> /etc/hosts
+
+nodes=($ZOOKEEPER_NODES)
+
+for node in ${nodes[@]} ; do
+  echo "配置 hosts"
+  ip=$(printenv ${node})
+  echo "$ip ${node,,}" >> /etc/hosts
+done

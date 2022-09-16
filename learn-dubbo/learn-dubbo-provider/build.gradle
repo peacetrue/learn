@@ -1,0 +1,36 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id "application"
+    id "org.springframework.boot" version "${springBootPluginVersion}"
+}
+
+configurations {
+    // 处理 log4j 日志警告，排除 log4j 依赖
+    // https://cloud.tencent.com/developer/article/1746922
+    all*.exclude module: "log4j"
+}
+
+dependencies {
+    implementation platform(SpringBootPlugin.BOM_COORDINATES) //版本管理
+    implementation project(":learn-dubbo-interface")
+    implementation platform("org.apache.dubbo:dubbo-bom:${dubbo.version}")
+    implementation "org.apache.dubbo:dubbo"
+    implementation "org.apache.dubbo:dubbo-spring-boot-starter"
+    implementation "org.apache.dubbo:dubbo-dependencies-zookeeper"
+
+    // https://dubbo.apache.org/zh/blog/2020/12/22/dubbo-api-docs-apache-dubbo%E6%96%87%E6%A1%A3%E5%B1%95%E7%A4%BA%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/
+    implementation "org.apache.dubbo:dubbo-api-docs-annotations:2+"
+    implementation "org.apache.dubbo:dubbo-api-docs-core:2+"
+
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+}
+
+application {
+    applicationDefaultJvmArgs = ["-Xms50M", "-Xmx50M", "-Dspring.profiles.active=prod"]
+}
+
+
+

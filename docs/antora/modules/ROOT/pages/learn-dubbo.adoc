@@ -1,0 +1,159 @@
+= Dubbo
+:LEARN_DUBBO_ADMIN_PORT: 8090
+:LEARN_DUBBO_PROVIDER_PORT: 8091
+:LEARN_DUBBO_CONSUMER_PORT: 8092
+
+
+参考：
+
+* https://dubbo.apache.org/zh/docs/v3.0/[Apache Dubbo 3.0^]
+* https://dubbo.apache.org/zh/docs/v2.7/[Apache Dubbo 2.7^]
+
+== 项目规划
+
+.模块
+|===
+|名称 |描述 |备注
+
+|learn-dubbo-interface
+|接口
+|
+
+|learn-dubbo-provider
+|提供者
+|
+
+|learn-dubbo-consumer
+|消费者
+|
+
+|learn-dubbo-admin
+|管理控制台
+|
+|===
+
+
+.应用
+|===
+|名称 |描述 |端口 |备注
+
+|learn-dubbo-admin
+|管理控制台
+|{LEARN_DUBBO_ADMIN_PORT}
+|
+
+|learn-dubbo-provider
+|提供者
+|{LEARN_DUBBO_PROVIDER_PORT}
+|
+
+|learn-dubbo-consumer
+|消费者
+|{LEARN_DUBBO_CONSUMER_PORT}
+|
+|===
+
+.集群
+|===
+|名称 |描述 |备注
+
+|dubbo-node01
+|Nginx
+|
+
+|dubbo-node02
+|管理控制台
+|
+
+|dubbo-node03、dubbo-node04、dubbo-node05
+|zookeeper、提供者、消费者
+|
+|===
+
+.本地部署模式
+[plantuml,target=deployment-local,format=png]
+----
+@startuml
+component Nginx
+
+folder html{
+    folder bee{
+    }
+}
+note bottom of html: Nginx 静态文件目录
+Nginx --> html: 读取
+
+folder 前端{
+    folder build{
+    }
+}
+note right of build: 构建生成的静态资源文件
+bee --> build: 软链接，保持各部分独立性
+
+folder 后端{
+    artifact 主应用
+    artifact 监控应用
+}
+
+Nginx --> 主应用: 反向代理
+主应用 --> 监控应用: 注册
+主应用 <-- 监控应用: 获取监控指标
+@enduml
+----
+
+
+
+
+== learn-dubbo-admin
+
+[source%nowrap,bash]
+----
+java -jar dubbo-admin-distribution/target/dubbo-admin-0.4.0.jar --server.port=8083
+java -jar learn-dubbo-admin/dubbo-admin-distribution/target/dubbo-admin-0.4.0.jar --server.port=8083
+----
+
+访问 http://localhost:8083 ， 默认用户名密码，参考 https://github.com/apache/dubbo/issues/1268 。
+
+== Hessian
+
+参考：
+
+* http://hessian.caucho.com/doc/hessian-serialization.html[官方协议^]
+* https://www.jianshu.com/p/e800d8af4e22[浅析 Hessian 协议^]
+* http://hessian.caucho.com/[hessian binary web service protocol^]
+* https://search.maven.org/artifact/com.caucho/hessian/4.0.66/jar[sonatype^]
+
+居然没有直接序列化、反序列的示例，需要基于一个客户端服务端的演示环境。
+
+== 集群
+
+== 问题
+
+=== Unable to canonicalize address
+
+java.lang.IllegalArgumentException: Unable to canonicalize address 127.0.0.1/<unresolved>:2181 because it's not resolvable
+
+see https://www.mail-archive.com/dev@zookeeper.apache.org/msg75111.html
+
+换成 jdk 11 解决。
+
+=== log4j:WARN No appenders could be found for logger
+
+    log4j:WARN No appenders could be found for logger (org.apache.dubbo.rpc.model.FrameworkModel).
+    log4j:WARN Please initialize the log4j system properly.
+    log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+
+排查配置中依赖的 log4j 。
+
+=== Failed to create file store cache
+
+see https://github.com/apache/dubbo/issues/9891
+
+    System.setProperty("dubbo.meta.cache.filePath", filePath);
+    System.setProperty("dubbo.mapping.cache.filePath",filePath);
+
+=== module java.base does not "opens java.math" to unnamed module @47089e5f
+
+=== 注册地址如何配置多个 zookeeper
+
+zookeeper 集群时，注册地址如何配置多个？ 或者配置任意一个，自动获取整个集群信息。

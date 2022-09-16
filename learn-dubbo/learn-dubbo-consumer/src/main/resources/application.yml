@@ -1,0 +1,22 @@
+
+dubbo:
+  application:
+    name: learn-dubbo-consumer
+  protocol:
+    name: dubbo
+    port: ${LEARN_DUBBO_CONSUMER_PORT}
+  registry:
+    id: zk-registry
+    protocol: zookeeper
+    address: localhost:2181
+    register-mode: instance
+#  consumer:
+#    check: false
+  config-center:
+    protocol: \${dubbo.registry.protocol}
+    address: \${dubbo.registry.address}
+  metadata-report:
+    protocol: \${dubbo.registry.protocol}
+    address: \${dubbo.registry.address}
+server:
+  port: ${LEARN_DUBBO_CONSUMER_WEB_PORT}

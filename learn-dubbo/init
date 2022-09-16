@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+function hosts() {
+  echo "$1: 配置 hosts"
+  local host="$1"
+  for _node in $ZOOKEEPER_NODES; do
+    ip="$(echo ${_node//-/_} | tr '[:lower:]' '[:upper:]')"
+    ip=$(printenv $ip)
+    echo "echo $ip ${_node} >>/etc/hosts"
+    ssh "root@$host" "echo $ip $_node >>/etc/hosts"
+  done
+}
+
+nodes=($ZOOKEEPER_NODES)
+#nodes=(${nodes[0]})
+for node in ${nodes[@]}; do
+  #  echo "配置免密"
+  #  ssh-copy-id "root@$node"
+  #
+  #  echo "安装 Git"
+  #  ssh "root@$node" "yum install -y git"
+  echo "启动 zookeeper"
+  ssh "root@$node" "zkServer.sh start"
+  #
+  #    echo "安装 vim"
+  #    ssh "root@$node" "yum install -y vim"
+
+  #  echo "初始化工作目录"
+  #  ssh "root@$node" "mkdir ~/learn-dubbo"
+  #    hosts $node
+  #  echo "安装 peacetrue-shell 脚本"
+  #  ssh "root@$node" "curl -s https://raw.githubusercontent.com/basherpm/basher/master/install.sh | bash"
+  #  ssh "root@$node" "basher install peacetrue/peacetrue-shell"
+done

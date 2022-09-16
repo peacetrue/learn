@@ -1,0 +1,12 @@
+logging:
+    file:
+        name: logs/\${dubbo.application.name}.log
+    level:
+        root: warn
+    logback:
+        rollingpolicy:
+            max-history: 30
+
+dubbo:
+  registry:
+    address: zookeeper-node01:2181,zookeeper-node02:2181,zookeeper-node03:2181

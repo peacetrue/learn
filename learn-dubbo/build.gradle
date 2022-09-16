@@ -1,0 +1,21 @@
+plugins {
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}" apply false
+}
+
+group "com.github.peacetrue.learn"
+version "${learnDubboVersion}${tailSnapshot}"
+description "学习 Dubbo"
+
+apply plugin: "com.github.peacetrue.gradle.build-convention"
+
+subprojects {
+    ext {
+        dubbo = [version: "3.0.7"]
+    }
+    processResources {
+        def map = ["LEARN_DUBBO_CONSUMER_WEB_PORT": "8093"]
+        map.putAll(System.getenv())
+        expand(map)
+    }
+}
+

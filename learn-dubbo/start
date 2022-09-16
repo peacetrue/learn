@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+#gradlew learn-dubbo-provider:bootDistTar
+#gradlew learn-dubbo-consumer:bootDistTar
+
+nodes=($ZOOKEEPER_NODES)
+nodes=(${nodes[1]})
+apps=("learn-dubbo-provider learn-dubbo-consumer")
+apps=(${apps[0]})
+for node in ${nodes[@]}; do
+  for app in ${apps[@]}; do
+    working_dir="/root/learn-dubbo"
+    project_dir="$app-boot-1.0.0-SNAPSHOT"
+    tar="$project_dir.tar"
+    echo "scp $app/build/distributions/$tar root@$node:$working_dir"
+    scp "$app/build/distributions/$tar" "root@$node:$working_dir"
+    port="$(echo ${app//-/_} | tr '[:lower:]' '[:upper:]')_PORT"
+    port="$(printenv $port)"
+    ssh "root@$node" "cd $working_dir; rm -rf $project_dir; tar -xf $tar; kill-by-port ${port}; nohup $project_dir/bin/$app &>/dev/null &;"
+  done
+done
