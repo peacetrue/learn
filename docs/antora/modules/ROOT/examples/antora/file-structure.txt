@@ -1,0 +1,27 @@
+.
+├── LICENSE
+├── README.adoc
+└── docs
+    ├── README.graffle
+    └── antora
+        ├── antora.yml
+        └── modules
+            └── ROOT
+                ├── assets
+                │   ├── attachments
+                │   └── images
+                ├── examples
+                │   └── antora
+                │       └── file-structure.txt
+                ├── nav.adoc
+                ├── pages
+                │   ├── antora.adoc
+                │   ├── branch.adoc
+                │   └── index.adoc
+                └── partials
+                    ├── branches
+                    │   └── antora.adoc
+                    └── navs
+                        └── antora.adoc
+
+13 directories, 11 files

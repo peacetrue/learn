@@ -1,0 +1,16 @@
+= Antora 文档
+
+//@formatter:off
+https://antora.org/[Antora^] 是为使用 https://asciidoc.org/[AsciiDoc^] 写作的技术作者提供的多库文档站点生成器。
+
+Antora 文档默认存储在资源库的 https://docs.antora.org/antora/latest/standard-directories/[根目录^] 下，
+这里调整到目录 *docs/antora* 下。
+文件结构如下：
+
+[source%nowrap,tree]
+----
+include::example$antora/file-structure.txt[]
+----
+
+
+

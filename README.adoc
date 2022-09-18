@@ -1,7 +1,16 @@
-= 学习
-peace <xiayouxue@hotmail.com>
-v1.0, 2021-06-22: SNAPSHOT
-:app-name: peacetrue-learn
+= 简介
+:website: https://peacetrue.github.io
+:app-name: learn
+:foresight-repo-id: 
+:imagesdir: docs/antora/modules/ROOT/assets/images
+
+image:https://img.shields.io/lgtm/grade/java/github/peacetrue/{app-name}["LGTM Grade",link="https://lgtm.com/projects/g/peacetrue/{app-name}"]
+image:https://snyk.io/test/github/peacetrue/{app-name}/badge.svg["Snyk",link="https://app.snyk.io/org/peacetrue"]
+image:https://img.shields.io/github/workflow/status/peacetrue/{app-name}/build/master["GitHub Workflow Status",link="https://github.com/peacetrue/{app-name}/actions"]
+image:https://foresight.service.thundra.io/public/api/v1/badge/success?repoId={foresight-repo-id}["Foresight",link="https://foresight.thundra.io/repositories/github/peacetrue/{app-name}/test-runs"]
+image:https://img.shields.io/codecov/c/github/peacetrue/{app-name}/master["Codecov",link="https://app.codecov.io/gh/peacetrue/{app-name}"]
+
+//@formatter:off
+{website}/{app-name}/[{app-name}] 用于记录学习过程。
 
 
-详情参考 https://peacetrue.cn/summarize/peacetrue-learn/index.html[安宁的博客^]。

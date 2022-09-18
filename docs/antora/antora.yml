@@ -1,11 +1,11 @@
-name: peacetrue-learn
+name: learn
 title: 学习
 version: master
 asciidoc:
   attributes:
-    placeholder: ''
     numbered: '@'
-    app-name: peacetrue-learn
+    website: https://peacetrue.github.io
+    app-name: learn
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
