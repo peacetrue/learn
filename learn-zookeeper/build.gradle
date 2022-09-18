@@ -1,0 +1,17 @@
+plugins {
+    id "com.github.peacetrue.gradle.build-convention" version "${peaceGradleVersion}${tailSnapshot}" apply false
+}
+
+group "com.github.peacetrue.learn.zookeeper"
+version "1.0.0${tailSnapshot}"
+description "learn zookeeper"
+apply plugin: "com.github.peacetrue.gradle.build-convention"
+
+allprojects {
+    dependencies {
+        implementation('org.apache.zookeeper:zookeeper') {
+            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        }
+        implementation("com.fasterxml.jackson.core:jackson-databind")
+    }
+}

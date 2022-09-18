@@ -114,7 +114,7 @@ public class ZooKeeperUtils {
     }
 
     private static ZooKeeper getZooKeeper(Watcher watcher) throws IOException {
-        String connectString = "10.0.0.41:2181,10.0.0.42:2181,10.0.0.43:2181";
+        String connectString = "zookeeper-node01:2181,zookeeper-node02:2181,zookeeper-node03:2181";
         return new ZooKeeper(
                 connectString,
                 5_000,

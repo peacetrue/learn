@@ -1,5 +1,0 @@
-rootProject.name = "learn-zookeeper"
-include 'learn-zookeeper-resource-server'
-include 'learn-zookeeper-resource-client'
-include 'learn-zookeeper-distributed-id'
-
