@@ -1,0 +1,18 @@
+= 学习 ZooKeeper
+
+参考：
+
+* https://zookeeper.apache.org
+
+== 选主
+
+参考 https://zookeeper.apache.org/doc/current/zookeeperInternals.html 。
+
+这个文档，没有明确解释清楚。
+
+由于无法清楚的了解 ZooKeeper，所以转投 raft。
+
+
+
+
+

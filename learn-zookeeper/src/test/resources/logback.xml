@@ -10,6 +10,5 @@
     <root level="info">
         <appender-ref ref="stdout"/>
     </root>
-    <logger name="com.github.peacetrue.bee" level="trace" />
-
+    <logger name="com.github.peacetrue.learn" level="trace" />
 </configuration>
