@@ -3,6 +3,7 @@
 参考：
 
 * https://zookeeper.apache.org
+* http://www.tcs.hut.fi/Studies/T-79.5001/reports/2012-deSouzaMedeiros.pdf
 
 == 选主
 
