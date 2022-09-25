@@ -1,0 +1,19 @@
+= Strace
+
+使用 https://wangchujiang.com/linux-command/c/strace.html[strace^] 追踪 Java 代码对应的系统调用。
+
+.Mac
+[source%nowrap,bash]
+----
+$ sudo dtruss java -version
+dtrace: system integrity protection is on, some features will not be available
+----
+
+.Linux
+[source%nowrap,bash]
+----
+$ strace java -version
+include::example$learn-strace/java-version.txt[]
+----
+
+想要比照代码分析，还是比较困难的。
